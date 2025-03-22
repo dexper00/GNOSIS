@@ -4,10 +4,268 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GNOSIS 4.0 - Events Registration</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            overflow-x: hidden;
+            background-color: #000;
+        }
+        
+        /* Background Video */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .video-container video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+        }
+        
+        /* Dark Overlay with Gradient */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+            z-index: 0;
+        }
+        
+        /* Center Content */
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            width: 90%;
+            max-width: 800px;
+            z-index: 2;
+            padding: 20px;
+        }
+        
+        /* Title with Glow Effect */
+        .title {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #3494E6, #EC6EAD);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(52, 148, 230, 0.5);
+            letter-spacing: 2px;
+        }
+        
+        .description {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            color: #f0f0f0;
+            letter-spacing: 1px;
+        }
+        
+        /* Centered Slideshow Container with Better Styling */
+        .event-container {
+            width: 400px;
+            height: 250px;
+            margin: 30px auto;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Event Images */
+        .event-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            transform: scale(1.05);
+        }
+        
+        .event-image.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* Navigation Dots */
+        .navigation-dots {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .dot.active {
+            background-color: #EC6EAD;
+        }
+        
+        /* Event Name with Better Styling */
+        .event-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            display: inline-block;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+        
+        /* Button Styling */
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background: linear-gradient(45deg, #3494E6, #EC6EAD);
+            border: none;
+            cursor: pointer;
+            border-radius: 50px;
+            margin: 15px 10px;
+            transition: all 0.3s ease-in-out;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(236, 110, 173, 0.3);
+            transform: translateY(0);
+            opacity: 0.95;
+        }
+        
+        button:hover {
+            background: linear-gradient(45deg, #EC6EAD, #3494E6);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(236, 110, 173, 0.4);
+            opacity: 1;
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 15px rgba(236, 110, 173, 0.3);
+        }
+        
+        /* Success Message */
+        .success-message {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px 25px;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+            margin: 15px 0;
+            display: none;
+            text-align: left;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            z-index: 10;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #EC6EAD;
+            animation: spin 1s ease-in-out infinite;
+            margin: 15px auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive Fixes */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 3rem;
+            }
+            
+            .description {
+                font-size: 1.2rem;
+            }
+            
+            .event-container {
+                width: 90%;
+                height: 200px;
+            }
+            
+            button {
+                font-size: 16px;
+                padding: 12px 24px;
+                display: block;
+                margin: 15px auto;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .event-name {
+                font-size: 20px;
+                padding: 8px 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .description {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-
     <!-- Background Video -->
     <div class="video-container">
         <video autoplay loop muted playsinline>
@@ -15,15 +273,15 @@
             Your browser does not support the video tag.
         </video>
     </div>
-
+    
     <!-- Overlay -->
     <div class="overlay"></div>
-
+    
     <!-- Content Section -->
     <div class="content">
         <h1 class="title">GNOSIS 4.0</h1>
         <p class="description">The Ultimate Tech Events - Register Now!</p>
-
+        
         <!-- Single Centered Image Slideshow -->
         <div class="event-container">
             <img class="event-image active" src="images/image.png" alt="Gaming Tournament">
@@ -31,65 +289,177 @@
             <img class="event-image" src="images/image3.jpg" alt="Coding Challenge">
             <img class="event-image" src="images/image5.jpg" alt="Project Expo">
         </div>
-
+        
+        <!-- Navigation Dots -->
+        <div class="navigation-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+        </div>
+        
         <!-- Event Name -->
-        <p class="event-name" id="eventName">Gaming Tournament</p>
-
+        <div class="event-name" id="eventName">Gaming Tournament</div>
+        
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage">
+            Payment successful! Please share the screenshot for verification.
+        </div>
+        
+        <!-- Loading Animation -->
+        <div class="loading" id="loading"></div>
+        
         <!-- Payment Button -->
         <button id="payButton">Pay to Register - ₹20</button>
-
+        
         <!-- Share Screenshot Button (Initially Hidden) -->
         <button id="shareButton" style="display: none;">Share Screenshot on WhatsApp</button>
-
+        
         <!-- Proceed to Form Button (Initially Hidden) -->
         <button id="registerForm" style="display: none;">Proceed to Registration Form</button>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        © 2025 GNOSIS 4.0 | All Rights Reserved
     </div>
 
     <script>
         const eventNames = ["Gaming Tournament", "Digital Drawing", "Coding Challenge", "Project Expo"];
         const images = document.querySelectorAll(".event-image");
+        const dots = document.querySelectorAll(".dot");
         const eventNameElement = document.getElementById("eventName");
-
+        const successMessage = document.getElementById("successMessage");
+        const loading = document.getElementById("loading");
         let index = 0;
-
-        function showNextImage() {
-            images.forEach((img, i) => {
-                img.classList.remove("active"); // Hide all images
-            });
-
-            images[index].classList.add("active"); // Show current image
-            eventNameElement.innerText = eventNames[index]; // Update event name
-
-            index = (index + 1) % images.length; // Move to next image
+        let autoSlideInterval;
+        
+        // Function to show image at specific index
+        function showImage(idx) {
+            // Remove active class from all images and dots
+            images.forEach(img => img.classList.remove("active"));
+            dots.forEach(dot => dot.classList.remove("active"));
+            
+            // Add active class to current image and dot
+            images[idx].classList.add("active");
+            dots[idx].classList.add("active");
+            
+            // Update event name
+            eventNameElement.innerText = eventNames[idx];
+            
+            // Update index
+            index = idx;
         }
-
-        setInterval(showNextImage, 4000); // Change image every 4 seconds
-
-        // Payment Handling
-        document.getElementById("payButton").addEventListener("click", function() {
-            let upiURL = "upi://pay?pa=lenadorin8@oksbi&pn=Registrationforevent&am=20&cu=INR";
-            window.location.href = upiURL;
-
-            setTimeout(() => {
-                document.getElementById("shareButton").style.display = "inline-block";
-            }, 10000);
+        
+        // Start auto slideshow
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(() => {
+                let nextIndex = (index + 1) % images.length;
+                showImage(nextIndex);
+            }, 4000);
+        }
+        
+        // Initialize slideshow
+        startAutoSlide();
+        
+        // Add click event to dots
+        dots.forEach(dot => {
+            dot.addEventListener("click", function() {
+                // Get index from data attribute
+                let dotIndex = parseInt(this.getAttribute("data-index"));
+                
+                // Show image at that index
+                showImage(dotIndex);
+                
+                // Reset auto slideshow
+                clearInterval(autoSlideInterval);
+                startAutoSlide();
+            });
         });
-
+        
+        // Payment Handling with enhanced UX
+        document.getElementById("payButton").addEventListener("click", function() {
+            // Show loading animation
+            loading.style.display = "block";
+            this.disabled = true;
+            this.textContent = "Processing...";
+            
+            // UPI Payment URL
+            let upiURL = "upi://pay?pa=lenadorin8@oksbi&pn=NabeelAlikkal&am=20&cu=INR";
+            
+            // Open UPI payment
+            window.location.href = upiURL;
+            
+            // Simulate payment completion after delay
+            setTimeout(() => {
+                // Hide loading and show success message
+                loading.style.display = "none";
+                successMessage.style.display = "block";
+                
+                // Enable and show share button
+                document.getElementById("shareButton").style.display = "inline-block";
+                this.textContent = "Payment Completed";
+                this.style.backgroundColor = "#4CAF50";
+                this.disabled = true;
+            }, 8000);
+        });
+        
+        // WhatsApp sharing
         document.getElementById("shareButton").addEventListener("click", function() {
             let whatsappMessage = "Hey, I have completed my payment for GNOSIS 4.0. Here is my screenshot for verification.";
             let whatsappURL = `https://api.whatsapp.com/send?phone=+918157812238&text=${encodeURIComponent(whatsappMessage)}`;
             
             window.open(whatsappURL, "_blank");
-
+            
+            // Show registration form button after delay
             setTimeout(() => {
                 document.getElementById("registerForm").style.display = "inline-block";
-            }, 5000);
+                document.getElementById("registerForm").style.animation = "fadeIn 0.5s ease-in-out";
+            }, 3000);
         });
-
+        
+        // Registration form redirect
         document.getElementById("registerForm").addEventListener("click", function() {
-            window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSeTyEsj4-tN4xsrVnpy5kJi3z2AolwD-V4UWGoBOkSMN2BmGQ/viewform?usp=header";
+            this.textContent = "Redirecting...";
+            this.disabled = true;
+            
+            setTimeout(() => {
+                window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSeTyEsj4-tN4xsrVnpy5kJi3z2AolwD-V4UWGoBOkSMN2BmGQ/viewform?usp=header";
+            }, 1000);
         });
+        
+        // Add swipe functionality for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        const eventContainer = document.querySelector(".event-container");
+        
+        eventContainer.addEventListener("touchstart", (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        eventContainer.addEventListener("touchend", (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            // Reset timer
+            clearInterval(autoSlideInterval);
+            
+            if (touchStartX - touchEndX > 50) {
+                // Swipe left - next image
+                let nextIndex = (index + 1) % images.length;
+                showImage(nextIndex);
+            } else if (touchEndX - touchStartX > 50) {
+                // Swipe right - previous image
+                let prevIndex = (index - 1 + images.length) % images.length;
+                showImage(prevIndex);
+            }
+            
+            // Restart timer
+            startAutoSlide();
+        }
     </script>
-
 </body>
 </html>
