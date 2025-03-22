@@ -14,8 +14,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     object-fit: cover; /* Ensures the video fills the screen without distortion */
     transform: translate(-50%, -50%);
 }
@@ -44,10 +44,12 @@
 
 /* Event Image Display */
 .event-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Space between images */
     width: 90%;
     max-width: 600px;
-    height: auto;
-    position: relative;
     margin: 20px auto;
     overflow: hidden;
 }
@@ -55,20 +57,20 @@
 /* Event Image Styles */
 .event-image {
     width: 100%;
-    height: auto;
-    max-height: 300px;
-    position: absolute;
-    top: 0;
-    left: 0;
+    height: 100%;
+    max-height: 200px;
+    object-fit: contain; /* Prevents stretching */
     opacity: 0;
     transition: opacity 1s ease-in-out;
 }
 
-/* Event Name Display */
+/* Event Name Styling */
 .event-name {
     font-size: 20px;
     font-weight: bold;
     margin-top: 10px;
+    text-align: center;
+    transition: opacity 1s ease-in-out;
 }
 
 /* Button Styling */
@@ -88,18 +90,14 @@ button {
 
 button:hover {
     background: linear-gradient(45deg, #ff4b2b, #ff416c);
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 /* Responsive Fixes */
 @media (max-width: 768px) {
     .event-container {
-        width: 95%;
-        height: auto;
-    }
-
-    .event-name {
-        font-size: 18px;
+        width: 90%;
+        max-width: 400px;
     }
 
     .content h1 {
@@ -113,5 +111,9 @@ button:hover {
     button {
         font-size: 16px;
         padding: 12px 24px;
+    }
+
+    .event-name {
+        font-size: 18px;
     }
 }
