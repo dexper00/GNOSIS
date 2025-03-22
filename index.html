@@ -225,42 +225,6 @@
             border-left: 4px solid #2196F3;
         }
         
-        .success-message {
-            border-left: 4px solid #FF9800;
-            display: none;
-        }
-        
-        /* Success Animation */
-        .success-animation {
-            width: 100px;
-            height: 100px;
-            margin: 20px auto;
-            display: none;
-        }
-        
-        .success-animation svg {
-            width: 100%;
-            height: 100%;
-        }
-        
-        .checkmark {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: dash 2s ease-in-out forwards;
-        }
-        
-        .circle {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: dash 2s ease-in-out forwards;
-        }
-        
-        @keyframes dash {
-            to {
-                stroke-dashoffset: 0;
-            }
-        }
-        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -343,43 +307,6 @@
             background-color: #4CAF50;
         }
         
-        /* Final Success Section */
-        .success-section {
-            display: none;
-            animation: fadeIn 0.8s ease-in-out;
-        }
-        
-        .success-title {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            color: #4CAF50;
-        }
-        
-        .registration-details {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px auto;
-            max-width: 400px;
-            text-align: left;
-            border-left: 4px solid #FF9800;
-        }
-        
-        .detail-item {
-            margin: 10px 0;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .detail-label {
-            font-weight: 600;
-            color: #f0f0f0;
-        }
-        
-        .detail-value {
-            color: #EC6EAD;
-        }
-        
         /* Responsive Fixes */
         @media (max-width: 768px) {
             .title {
@@ -422,10 +349,6 @@
             .step {
                 margin: 10px;
             }
-            
-            .success-title {
-                font-size: 1.5rem;
-            }
         }
         
         @media (max-width: 480px) {
@@ -456,121 +379,69 @@
         <h1 class="title">GNOSIS 4.0</h1>
         <p class="description">The Ultimate Tech Event - Register Now!</p>
         
-        <!-- Registration Process Section -->
-        <div id="registrationProcess">
-            <!-- Registration Steps -->
-            <div class="steps">
-                <div class="step active" id="step1">
-                    <div class="step-number">1</div>
-                    <div class="step-text">Payment</div>
-                </div>
-                <div class="step" id="step2">
-                    <div class="step-number">2</div>
-                    <div class="step-text">Verification</div>
-                </div>
-                <div class="step" id="step3">
-                    <div class="step-number">3</div>
-                    <div class="step-text">Registration</div>
-                </div>
-                <div class="step" id="step4">
-                    <div class="step-number">4</div>
-                    <div class="step-text">Complete</div>
-                </div>
+        <!-- Registration Steps -->
+        <div class="steps">
+            <div class="step active" id="step1">
+                <div class="step-number">1</div>
+                <div class="step-text">Payment</div>
             </div>
-            
-            <!-- Single Centered Image Slideshow -->
-            <div class="event-container">
-                <img class="event-image active" src="images/image.png" alt="Gaming Tournament">
-                <img class="event-image" src="images/image2.jpg" alt="Digital Drawing">
-                <img class="event-image" src="images/image3.jpg" alt="Coding Challenge">
-                <img class="event-image" src="images/image5.jpg" alt="Project Expo">
+            <div class="step" id="step2">
+                <div class="step-number">2</div>
+                <div class="step-text">Verification</div>
             </div>
-            
-            <!-- Navigation Dots -->
-            <div class="navigation-dots">
-                <span class="dot active" data-index="0"></span>
-                <span class="dot" data-index="1"></span>
-                <span class="dot" data-index="2"></span>
-                <span class="dot" data-index="3"></span>
+            <div class="step" id="step3">
+                <div class="step-number">3</div>
+                <div class="step-text">Registration</div>
             </div>
-            
-            <!-- Event Name -->
-            <div class="event-name" id="eventName">Gaming Tournament</div>
-            
-            <!-- Status Messages -->
-            <div class="status-message payment-message" id="paymentMessage">
-                Payment received! Please click "Payment Complete" to continue.
-            </div>
-            
-            <div class="status-message share-message" id="shareMessage">
-                Screenshot shared! You can now proceed to registration.
-            </div>
-            
-            <div class="status-message success-message" id="successMessage">
-                Registration form submitted successfully! Please wait while we confirm your registration...
-            </div>
-            
-            <!-- Loading Animation -->
-            <div class="loading" id="loading"></div>
-            
-            <!-- Initial Payment Button -->
-            <div class="button-container" id="initialPaymentButtons">
-                <button id="payButton">Pay to Register - ₹20</button>
-            </div>
-            
-            <!-- Post-Payment Buttons (Initially Hidden) -->
-            <div class="button-container" id="paymentConfirmationButtons" style="display: none;">
-                <button id="gotPaymentBtn" class="got-payment-btn">Got Payment</button>
-                <button id="paymentCompleteBtn" class="payment-complete-btn">Payment Complete</button>
-            </div>
-            
-            <!-- Share Screenshot Button (Initially Hidden) -->
-            <button id="shareButton" style="display: none;">Share Screenshot on WhatsApp</button>
-            
-            <!-- Proceed to Form Button (Initially Hidden) -->
-            <button id="registerForm" style="display: none;">Proceed to Registration Form</button>
-            
-            <!-- Return from Form Button (Initially Hidden) -->
-            <button id="returnFromForm" style="display: none;">I've Completed the Form</button>
         </div>
         
-        <!-- Success Section (Initially Hidden) -->
-        <div id="successSection" class="success-section">
-            <!-- Success Animation -->
-            <div class="success-animation">
-                <svg viewBox="0 0 52 52">
-                    <circle class="circle" cx="26" cy="26" r="25" fill="none" stroke="#4CAF50" stroke-width="2"/>
-                    <path class="checkmark" fill="none" stroke="#4CAF50" stroke-width="2" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                </svg>
-            </div>
-            
-            <h2 class="success-title">Registration Successful!</h2>
-            <p>Congratulations! Your registration for GNOSIS 4.0 is complete.</p>
-            
-            <div class="registration-details">
-                <div class="detail-item">
-                    <span class="detail-label">Event:</span>
-                    <span class="detail-value" id="registeredEvent">Gaming Tournament</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Registration ID:</span>
-                    <span class="detail-value" id="registrationId">GNS-2025-</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Date:</span>
-                    <span class="detail-value">March 22, 2025</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Status:</span>
-                    <span class="detail-value">Confirmed</span>
-                </div>
-            </div>
-            
-            <p>Please save your registration details for future reference.</p>
-            <p>We'll send you event details and updates via email.</p>
-            
-            <button id="downloadDetails">Download Details</button>
+        <!-- Single Centered Image Slideshow -->
+        <div class="event-container">
+            <img class="event-image active" src="images/image.png" alt="Gaming Tournament">
+            <img class="event-image" src="images/image2.jpg" alt="Digital Drawing">
+            <img class="event-image" src="images/image3.jpg" alt="Coding Challenge">
+            <img class="event-image" src="images/image5.jpg" alt="Project Expo">
         </div>
+        
+        <!-- Navigation Dots -->
+        <div class="navigation-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+        </div>
+        
+        <!-- Event Name -->
+        <div class="event-name" id="eventName">Gaming Tournament</div>
+        
+        <!-- Status Messages -->
+        <div class="status-message payment-message" id="paymentMessage">
+            Payment received! Please click "Payment Complete" to continue.
+        </div>
+        
+        <div class="status-message share-message" id="shareMessage">
+            Screenshot shared! You can now proceed to registration.
+        </div>
+        
+        <!-- Loading Animation -->
+        <div class="loading" id="loading"></div>
+        
+        <!-- Initial Payment Button -->
+        <div class="button-container" id="initialPaymentButtons">
+            <button id="payButton">Pay to Register - ₹20</button>
+        </div>
+        
+        <!-- Post-Payment Buttons (Initially Hidden) -->
+        <div class="button-container" id="paymentConfirmationButtons" style="display: none;">
+            <button id="gotPaymentBtn" class="got-payment-btn">Got Payment</button>
+            <button id="paymentCompleteBtn" class="payment-complete-btn">Payment Complete</button>
+        </div>
+        
+        <!-- Share Screenshot Button (Initially Hidden) -->
+        <button id="shareButton" style="display: none;">Share Screenshot on WhatsApp</button>
+        
+        <!-- Proceed to Form Button (Initially Hidden) -->
+        <button id="registerForm" style="display: none;">Proceed to Registration Form</button>
     </div>
     
     <!-- Footer -->
@@ -585,12 +456,7 @@
         const eventNameElement = document.getElementById("eventName");
         const paymentMessage = document.getElementById("paymentMessage");
         const shareMessage = document.getElementById("shareMessage");
-        const successMessage = document.getElementById("successMessage");
         const loading = document.getElementById("loading");
-        
-        // Main section elements
-        const registrationProcess = document.getElementById("registrationProcess");
-        const successSection = document.getElementById("successSection");
         
         // Button elements
         const payButton = document.getElementById("payButton");
@@ -600,18 +466,11 @@
         const paymentCompleteBtn = document.getElementById("paymentCompleteBtn");
         const shareButton = document.getElementById("shareButton");
         const registerForm = document.getElementById("registerForm");
-        const returnFromForm = document.getElementById("returnFromForm");
-        const downloadDetails = document.getElementById("downloadDetails");
         
         // Step elements
         const step1 = document.getElementById("step1");
         const step2 = document.getElementById("step2");
         const step3 = document.getElementById("step3");
-        const step4 = document.getElementById("step4");
-        
-        // Details elements
-        const registeredEvent = document.getElementById("registeredEvent");
-        const registrationId = document.getElementById("registrationId");
         
         let index = 0;
         let autoSlideInterval;
@@ -665,7 +524,6 @@
             step1.classList.remove("active", "completed");
             step2.classList.remove("active", "completed");
             step3.classList.remove("active", "completed");
-            step4.classList.remove("active", "completed");
             
             // Mark current step as active and previous steps as completed
             if (stepNumber === 1) {
@@ -677,11 +535,6 @@
                 step1.classList.add("completed");
                 step2.classList.add("completed");
                 step3.classList.add("active");
-            } else if (stepNumber === 4) {
-                step1.classList.add("completed");
-                step2.classList.add("completed");
-                step3.classList.add("completed");
-                step4.classList.add("active");
             }
         }
         
@@ -771,61 +624,9 @@
             this.textContent = "Redirecting...";
             this.disabled = true;
             
-            // Store the selected event
-            localStorage.setItem("selectedEvent", eventNames[index]);
-            
-            // Store registration timestamp
-            localStorage.setItem("registrationTime", new Date().getTime());
-            
-            // Show the return button after a delay
             setTimeout(() => {
-                registerForm.style.display = "none";
-                shareMessage.style.display = "none";
-                returnFromForm.style.display = "inline-block";
-                
-                // Open Google form in a new tab
-                window.open("https://docs.google.com/forms/d/e/1FAIpQLSeTyEsj4-tN4xsrVnpy5kJi3z2AolwD-V4UWGoBOkSMN2BmGQ/viewform?usp=header", "_blank");
+                window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSeTyEsj4-tN4xsrVnpy5kJi3z2AolwD-V4UWGoBOkSMN2BmGQ/viewform?usp=header";
             }, 1000);
-        });
-        
-        // Return from form button
-        returnFromForm.addEventListener("click", function() {
-            // Show success message
-            successMessage.style.display = "block";
-            this.style.display = "none";
-            
-            // Show loading animation
-            loading.style.display = "block";
-            
-            // Update step indicator
-            updateStep(4);
-            
-            // After a delay, show success section
-            setTimeout(() => {
-                loading.style.display = "none";
-                
-                // Hide registration process
-                registrationProcess.style.display = "none";
-                
-                // Populate registration details
-                registeredEvent.textContent = localStorage.getItem("selectedEvent") || eventNames[index];
-                
-                // Generate a random registration ID
-                const timestamp = localStorage.getItem("registrationTime") || new Date().getTime();
-                const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-                registrationId.textContent = `GNS-2025-${random}`;
-                
-                // Show success section
-                successSection.style.display = "block";
-                
-                // Show success animation
-                document.querySelector(".success-animation").style.display = "block";
-            }, 3000);
-        });
-        
-        // Download details button
-        downloadDetails.addEventListener("click", function() {
-            alert("Registration details will be sent to your email address provided in the form. Thank you for registering for GNOSIS 4.0!");
         });
         
         // Add swipe functionality for mobile
@@ -860,29 +661,6 @@
             // Restart timer
             startAutoSlide();
         }
-        
-        // Check URL parameters for returning from form
-        window.addEventListener('load', function() {
-            // If there's a form_submitted parameter or we have registration time stored
-            if (window.location.href.includes('form_submitted=true') || localStorage.getItem("registrationTime")) {
-                // If returnFromForm is visible, simulate a click
-                if (returnFromForm.style.display === "inline-block") {
-                    returnFromForm.click();
-                } else if (!successSection.style.display || successSection.style.display === "none") {
-                    // Fast forward to registration step if we're on an earlier step
-                    shareMessage.style.display = "block";
-                    registerForm.style.display = "inline-block";
-                    returnFromForm.style.display = "inline-block";
-                    updateStep(3);
-                    
-                    // Hide irrelevant elements
-                    initialPaymentButtons.style.display = "none";
-                    paymentConfirmationButtons.style.display = "none";
-                    shareButton.style.display = "none";
-                    paymentMessage.style.display = "none";
-                }
-            }
-        });
     </script>
 </body>
 </html>
