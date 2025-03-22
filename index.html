@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
+
     <!-- Background Video -->
     <div class="video-container">
         <video autoplay loop muted playsinline>
@@ -24,16 +24,16 @@
         <h1 class="title">GNOSIS 4.0</h1>
         <p class="description">The Ultimate Tech Event - Register Now!</p>
 
-        <!-- Image Display Area -->
+        <!-- Centered Slideshow -->
         <div class="event-container">
-            <img class="event-image" src="images/image.png" alt="Gaming Tournament">
+            <img class="event-image active" src="images/image.png" alt="Gaming Tournament">
             <img class="event-image" src="images/image2.jpg" alt="Digital Drawing">
             <img class="event-image" src="images/image3.jpg" alt="Coding Challenge">
             <img class="event-image" src="images/image5.jpg" alt="Project Expo">
         </div>
 
-        <!-- Event Name Display -->
-        <p class="event-name" id="eventName">Coding Challenge</p>
+        <!-- Event Name -->
+        <p class="event-name" id="eventName">Gaming Tournament</p>
 
         <!-- Payment Button -->
         <button id="payButton">Pay to Register - ₹20</button>
@@ -46,8 +46,7 @@
     </div>
 
     <script>
-        // Array of Event Names
-        const eventNames = ["Coding Challenge", "Digital Drawing", "Rapid PC Assembling", "Gaming Tournament"];
+        const eventNames = ["Gaming Tournament", "Digital Drawing", "Coding Challenge", "Project Expo"];
         const images = document.querySelectorAll(".event-image");
         const eventNameElement = document.getElementById("eventName");
 
@@ -55,17 +54,16 @@
 
         function showNextImage() {
             images.forEach((img, i) => {
-                img.style.opacity = i === index ? "1" : "0"; // Show current image, hide others
+                img.classList.remove("active"); // Hide all images
             });
 
-            // Update Event Name
-            eventNameElement.innerText = eventNames[index];
+            images[index].classList.add("active"); // Show current image
+            eventNameElement.innerText = eventNames[index]; // Update event name
 
-            index = (index + 1) % images.length; // Loop back to the first image after the last
+            index = (index + 1) % images.length; // Move to next image
         }
 
         setInterval(showNextImage, 4000); // Change image every 4 seconds
-        showNextImage(); // Show the first image immediately
 
         // Payment Handling
         document.getElementById("payButton").addEventListener("click", function() {
