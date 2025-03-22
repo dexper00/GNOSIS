@@ -8,90 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-
-        /* Add this to your CSS styles */
-.content {
-    position: relative;
-    top: 0;
-    left: 0;
-    transform: none;
-    text-align: center;
-    color: white;
-    width: 90%;
-    max-width: 800px;
-    margin: 80px auto 150px auto; /* Top and bottom margins */
-    z-index: 2;
-    padding: 20px;
-}
-/* Add more space after buttons */
-.button-container {
-    margin-bottom: 50px; /* Add space below buttons */
-}
-
-/* Add space after individual buttons */
-#registerForm, #shareButton {
-    margin-bottom: 60px; /* Add space after these specific buttons */
-}
-
-/* Or a more comprehensive approach for all buttons at the end */
-#registerForm, #shareButton, .button-container:last-of-type {
-    margin-bottom: 70px; /* Generous space after the last button elements */
-}
-
-/* You could also add padding to the content container's bottom */
-.content {
-    padding-bottom: 80px; /* Increase padding at the bottom of content */
-}
-
-/* And adjust the footer's top margin */
-.footer {
-    margin-top: 40px; /* Add space above the footer */
-}
-/* Update content spacing */
-.content {
-    position: relative;
-    width: 90%;
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    z-index: 2;
-    padding-bottom: 100px; /* Add extra space for footer */
-}
-
-/* Update footer to not overlap buttons */
-.footer {
-    position: relative; /* Change from fixed to relative */
-    width: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
-    color: rgba(255, 255, 255, 0.8);
-    padding: 15px 0;
-    font-size: 0.9rem;
-    z-index: 10;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    margin-top: 30px;
-}
-
-/* Ensure body has proper padding */
-body {
-    min-height: 100vh;
-    padding-bottom: 20px;
-    position: relative;
-    overflow-x: hidden;
-    background-color: #000;
-}
-
-/* Keep the video and overlay fixed */
-.video-container, .overlay {
-    position: fixed;
-    z-index: 0;
-}
-
-/* Make sure buttons are above overlay but below footer */
-.button-container, #shareButton, #registerForm {
-    position: relative;
-    z-index: 5;
-}
+        
         * {
             margin: 0;
             padding: 0;
@@ -687,7 +604,7 @@ body {
             this.textContent = "Sharing...";
             
             let whatsappMessage = "Hey, I have completed my payment for GNOSIS 4.0. Here is my screenshot for verification.";
-            let whatsappURL = `https://api.whatsapp.com/send?phone=+918157812238&text=${encodeURIComponent(whatsappMessage)}`;
+            let whatsappURL = https://api.whatsapp.com/send?phone=+918157812238&text=${encodeURIComponent(whatsappMessage)};
             
             // Open WhatsApp
             window.open(whatsappURL, "_blank");
