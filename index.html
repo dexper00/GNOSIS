@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        
         * {
             margin: 0;
             padding: 0;
@@ -446,16 +445,10 @@
     </div>
     
     <!-- Footer -->
-  <!-- Footer -->
-<!-- Footer -->
-<div class="footer">
-    <div class="footer-content">
-        <p>© 2025 GNOSIS 4.0 | All Rights Reserved</p>
-        <div class="contact-info">
-            <p><strong>Contact Us:</strong> Nabeel A K | <a href="tel:+918157812238">+91 8157 812 238</a> | <a href="mailto:nabeelalikkal5@gmail.com">nabeelalikkal5@gmail.com</a></p>
-        </div>
+    <div class="footer">
+        © 2025 GNOSIS 4.0 | All Rights Reserved
     </div>
-</div>
+
     <script>
         const eventNames = ["Gaming Tournament", "Digital Drawing", "Coding Challenge", "Project Expo"];
         const images = document.querySelectorAll(".event-image");
@@ -604,7 +597,7 @@
             this.textContent = "Sharing...";
             
             let whatsappMessage = "Hey, I have completed my payment for GNOSIS 4.0. Here is my screenshot for verification.";
-            let whatsappURL = https://api.whatsapp.com/send?phone=+918157812238&text=${encodeURIComponent(whatsappMessage)};
+            let whatsappURL = `https://api.whatsapp.com/send?phone=+918157812238&text=${encodeURIComponent(whatsappMessage)}`;
             
             // Open WhatsApp
             window.open(whatsappURL, "_blank");
