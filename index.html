@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GNOSIS 4.0 - Events Registration</title>
+    <title>GNOSIS 4.0 - Event Registration</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -179,16 +179,23 @@
             box-shadow: 0 5px 15px rgba(236, 110, 173, 0.3);
         }
         
-        /* Success Message */
-        .success-message {
+        /* Status Messages */
+        .status-message {
             background: rgba(0, 0, 0, 0.6);
             padding: 15px 25px;
             border-radius: 8px;
-            border-left: 4px solid #4CAF50;
             margin: 15px 0;
             display: none;
             text-align: left;
             animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .payment-message {
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .share-message {
+            border-left: 4px solid #2196F3;
         }
         
         @keyframes fadeIn {
@@ -224,6 +231,55 @@
             to { transform: rotate(360deg); }
         }
         
+        /* Step Indicator */
+        .steps {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            margin: 0 20px;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 8px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .step-text {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+        
+        .step.active .step-number {
+            background-color: #EC6EAD;
+            border-color: white;
+        }
+        
+        .step.active .step-text {
+            color: white;
+        }
+        
+        .step.completed .step-number {
+            background-color: #4CAF50;
+        }
+        
         /* Responsive Fixes */
         @media (max-width: 768px) {
             .title {
@@ -251,6 +307,14 @@
             .event-name {
                 font-size: 20px;
                 padding: 8px 16px;
+            }
+            
+            .steps {
+                flex-wrap: wrap;
+            }
+            
+            .step {
+                margin: 10px;
             }
         }
         
@@ -280,7 +344,23 @@
     <!-- Content Section -->
     <div class="content">
         <h1 class="title">GNOSIS 4.0</h1>
-        <p class="description">The Ultimate Tech Events - Register Now!</p>
+        <p class="description">The Ultimate Tech Event - Register Now!</p>
+        
+        <!-- Registration Steps -->
+        <div class="steps">
+            <div class="step active" id="step1">
+                <div class="step-number">1</div>
+                <div class="step-text">Payment</div>
+            </div>
+            <div class="step" id="step2">
+                <div class="step-number">2</div>
+                <div class="step-text">Verification</div>
+            </div>
+            <div class="step" id="step3">
+                <div class="step-number">3</div>
+                <div class="step-text">Registration</div>
+            </div>
+        </div>
         
         <!-- Single Centered Image Slideshow -->
         <div class="event-container">
@@ -301,9 +381,13 @@
         <!-- Event Name -->
         <div class="event-name" id="eventName">Gaming Tournament</div>
         
-        <!-- Success Message -->
-        <div class="success-message" id="successMessage">
+        <!-- Status Messages -->
+        <div class="status-message payment-message" id="paymentMessage">
             Payment successful! Please share the screenshot for verification.
+        </div>
+        
+        <div class="status-message share-message" id="shareMessage">
+            Screenshot shared! You can now proceed to registration.
         </div>
         
         <!-- Loading Animation -->
@@ -329,8 +413,18 @@
         const images = document.querySelectorAll(".event-image");
         const dots = document.querySelectorAll(".dot");
         const eventNameElement = document.getElementById("eventName");
-        const successMessage = document.getElementById("successMessage");
+        const paymentMessage = document.getElementById("paymentMessage");
+        const shareMessage = document.getElementById("shareMessage");
         const loading = document.getElementById("loading");
+        const payButton = document.getElementById("payButton");
+        const shareButton = document.getElementById("shareButton");
+        const registerForm = document.getElementById("registerForm");
+        
+        // Step elements
+        const step1 = document.getElementById("step1");
+        const step2 = document.getElementById("step2");
+        const step3 = document.getElementById("step3");
+        
         let index = 0;
         let autoSlideInterval;
         
@@ -377,8 +471,28 @@
             });
         });
         
-        // Payment Handling with enhanced UX
-        document.getElementById("payButton").addEventListener("click", function() {
+        // Update step indicator
+        function updateStep(stepNumber) {
+            // Reset all steps
+            step1.classList.remove("active", "completed");
+            step2.classList.remove("active", "completed");
+            step3.classList.remove("active", "completed");
+            
+            // Mark current step as active and previous steps as completed
+            if (stepNumber === 1) {
+                step1.classList.add("active");
+            } else if (stepNumber === 2) {
+                step1.classList.add("completed");
+                step2.classList.add("active");
+            } else if (stepNumber === 3) {
+                step1.classList.add("completed");
+                step2.classList.add("completed");
+                step3.classList.add("active");
+            }
+        }
+        
+        // Payment Handling with improved flow
+        payButton.addEventListener("click", function() {
             // Show loading animation
             loading.style.display = "block";
             this.disabled = true;
@@ -392,34 +506,57 @@
             
             // Simulate payment completion after delay
             setTimeout(() => {
-                // Hide loading and show success message
+                // Hide loading
                 loading.style.display = "none";
-                successMessage.style.display = "block";
                 
-                // Enable and show share button
-                document.getElementById("shareButton").style.display = "inline-block";
-                this.textContent = "Payment Completed";
-                this.style.backgroundColor = "#4CAF50";
-                this.disabled = true;
+                // Show payment success message
+                paymentMessage.style.display = "block";
+                
+                // Update payment button
+                payButton.textContent = "Payment Completed";
+                payButton.style.background = "linear-gradient(45deg, #4CAF50, #2E7D32)";
+                payButton.disabled = true;
+                
+                // Show share button
+                shareButton.style.display = "inline-block";
+                
+                // Update step indicator
+                updateStep(2);
             }, 8000);
         });
         
         // WhatsApp sharing
-        document.getElementById("shareButton").addEventListener("click", function() {
+        shareButton.addEventListener("click", function() {
+            // Disable and update share button
+            this.disabled = true;
+            this.textContent = "Sharing...";
+            
             let whatsappMessage = "Hey, I have completed my payment for GNOSIS 4.0. Here is my screenshot for verification.";
             let whatsappURL = `https://api.whatsapp.com/send?phone=+918157812238&text=${encodeURIComponent(whatsappMessage)}`;
             
+            // Open WhatsApp
             window.open(whatsappURL, "_blank");
             
-            // Show registration form button after delay
+            // After a delay, hide share button and show confirmation
             setTimeout(() => {
-                document.getElementById("registerForm").style.display = "inline-block";
-                document.getElementById("registerForm").style.animation = "fadeIn 0.5s ease-in-out";
+                // Hide share button and payment message
+                shareButton.style.display = "none";
+                paymentMessage.style.display = "none";
+                
+                // Show share confirmation message
+                shareMessage.style.display = "block";
+                
+                // Show registration form button
+                registerForm.style.display = "inline-block";
+                registerForm.style.animation = "fadeIn 0.5s ease-in-out";
+                
+                // Update step indicator
+                updateStep(3);
             }, 3000);
         });
         
         // Registration form redirect
-        document.getElementById("registerForm").addEventListener("click", function() {
+        registerForm.addEventListener("click", function() {
             this.textContent = "Redirecting...";
             this.disabled = true;
             
