@@ -19,10 +19,9 @@
             overflow-x: hidden;
             background-color: #000;
             min-height: 100vh;
-            padding-bottom: 100px; /* Extra space at bottom */
+            padding-bottom: 100px;
         }
         
-        /* Background Video */
         .video-container {
             position: fixed;
             top: 0;
@@ -43,7 +42,6 @@
             transform: translate(-50%, -50%);
         }
         
-        /* Dark Overlay with Gradient */
         .overlay {
             position: fixed;
             top: 0;
@@ -54,7 +52,6 @@
             z-index: 0;
         }
         
-        /* Center Content */
         .content {
             position: relative;
             text-align: center;
@@ -64,10 +61,9 @@
             margin: 60px auto;
             z-index: 2;
             padding: 20px;
-            padding-bottom: 150px; /* Space for footer */
+            padding-bottom: 150px;
         }
         
-        /* Title with Glow Effect */
         .title {
             font-size: 4rem;
             font-weight: 700;
@@ -87,7 +83,6 @@
             letter-spacing: 1px;
         }
         
-        /* Centered Slideshow Container with Better Styling */
         .event-container {
             width: 400px;
             height: 250px;
@@ -98,7 +93,6 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
         
-        /* Event Images */
         .event-image {
             width: 100%;
             height: 100%;
@@ -116,7 +110,6 @@
             transform: scale(1);
         }
         
-        /* Navigation Dots */
         .navigation-dots {
             display: flex;
             justify-content: center;
@@ -137,7 +130,6 @@
             background-color: #EC6EAD;
         }
         
-        /* Event Name with Better Styling */
         .event-name {
             font-size: 24px;
             font-weight: 600;
@@ -151,17 +143,15 @@
             transition: all 0.3s ease-in-out;
         }
         
-        /* Button Container */
         .button-container {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 15px;
             margin: 20px 0;
-            margin-bottom: 70px; /* Extra space after buttons */
+            margin-bottom: 70px;
         }
         
-        /* Button Styling */
         button {
             padding: 15px 30px;
             font-size: 18px;
@@ -192,7 +182,6 @@
             box-shadow: 0 5px 15px rgba(236, 110, 173, 0.3);
         }
         
-        /* Got Payment Button */
         .got-payment-btn {
             background: linear-gradient(45deg, #43A047, #2E7D32);
         }
@@ -201,7 +190,6 @@
             background: linear-gradient(45deg, #2E7D32, #43A047);
         }
         
-        /* Payment Complete Button */
         .payment-complete-btn {
             background: linear-gradient(45deg, #1E88E5, #0D47A1);
         }
@@ -210,7 +198,6 @@
             background: linear-gradient(45deg, #0D47A1, #1E88E5);
         }
         
-        /* Status Messages */
         .status-message {
             background: rgba(0, 0, 0, 0.6);
             padding: 15px 25px;
@@ -234,9 +221,8 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Footer - Updated Styling */
         .footer {
-            position: static; /* Not fixed or relative */
+            position: static;
             width: 100%;
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
@@ -250,7 +236,6 @@
             line-height: 1.5;
         }
         
-        /* Contact links styling */
         .footer a {
             color: #EC6EAD;
             text-decoration: none;
@@ -262,14 +247,12 @@
             text-decoration: underline;
         }
 
-        /* Space before footer */
         .footer-spacer {
             height: 150px;
             width: 100%;
             clear: both;
         }
 
-        /* Loading Animation */
         .loading {
             display: none;
             width: 30px;
@@ -285,7 +268,6 @@
             to { transform: rotate(360deg); }
         }
         
-        /* Step Indicator */
         .steps {
             display: flex;
             justify-content: center;
@@ -334,12 +316,164 @@
             background-color: #4CAF50;
         }
         
-        /* Individual buttons with extra space */
         #shareButton, #registerForm {
             margin-bottom: 80px;
         }
         
-        /* Responsive Fixes */
+        .admin-login-container {
+            margin: 50px auto;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .admin-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #3494E6, #EC6EAD);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(52, 148, 230, 0.3);
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .admin-input {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .admin-input:focus {
+            border-color: #EC6EAD;
+            box-shadow: 0 0 10px rgba(236, 110, 173, 0.3);
+        }
+
+        .admin-login-btn {
+            background: linear-gradient(45deg, #E91E63, #9C27B0);
+        }
+
+        .admin-login-btn:hover {
+            background: linear-gradient(45deg, #9C27B0, #E91E63);
+        }
+
+        .admin-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 100%);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .admin-content {
+            width: 90%;
+            max-width: 800px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .admin-controls {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .control-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .control-title {
+            font-size: 1.5rem;
+            color: #f0f0f0;
+            margin-bottom: 10px;
+        }
+
+        .admin-btn {
+            background: linear-gradient(45deg, #F44336, #D81B60);
+        }
+
+        .admin-btn:hover {
+            background: linear-gradient(45deg, #D81B60, #F44336);
+        }
+
+        .admin-sub-page {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 15px;
+        }
+
+        .sub-page-content {
+            color: #f0f0f0;
+            text-align: left;
+        }
+
+        .sub-page-content h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #F44336, #D81B60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub-page-content p {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .data-preview {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .toggle-btn {
+            background: linear-gradient(45deg, #4CAF50, #2E7D32);
+            margin-top: 20px;
+        }
+
+        .toggle-btn:hover {
+            background: linear-gradient(45deg, #2E7D32, #4CAF50);
+        }
+
+        .back-btn {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            margin-top: 20px;
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(45deg, #1976D2, #2196F3);
+        }
+
         @media (max-width: 768px) {
             .title {
                 font-size: 3rem;
@@ -387,6 +521,18 @@
                 padding: 15px 10px;
                 font-size: 0.8rem;
             }
+
+            .admin-login-container {
+                width: 90%;
+            }
+            
+            .admin-input {
+                font-size: 14px;
+            }
+            
+            .admin-content {
+                padding: 20px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -401,7 +547,6 @@
     </style>
 </head>
 <body>
-    <!-- Background Video -->
     <div class="video-container">
         <video autoplay loop muted playsinline>
             <source src="background.mp4" type="video/mp4">
@@ -409,15 +554,12 @@
         </video>
     </div>
     
-    <!-- Overlay -->
     <div class="overlay"></div>
     
-    <!-- Content Section -->
     <div class="content">
         <h1 class="title">GNOSIS 4.0</h1>
         <p class="description">The Ultimate Tech Events - Register Now!</p>
         
-        <!-- Registration Steps -->
         <div class="steps">
             <div class="step active" id="step1">
                 <div class="step-number">1</div>
@@ -433,7 +575,6 @@
             </div>
         </div>
         
-        <!-- Single Centered Image Slideshow -->
         <div class="event-container">
             <img class="event-image active" src="images/image.png" alt="Gaming Tournament">
             <img class="event-image" src="images/image2.jpg" alt="Digital Drawing">
@@ -441,7 +582,6 @@
             <img class="event-image" src="images/image5.jpg" alt="Project Expo">
         </div>
         
-        <!-- Navigation Dots -->
         <div class="navigation-dots">
             <span class="dot active" data-index="0"></span>
             <span class="dot" data-index="1"></span>
@@ -449,10 +589,8 @@
             <span class="dot" data-index="3"></span>
         </div>
         
-        <!-- Event Name -->
         <div class="event-name" id="eventName">Gaming Tournament</div>
         
-        <!-- Status Messages -->
         <div class="status-message payment-message" id="paymentMessage">
             Payment received! Please click "Payment Complete" to continue.
         </div>
@@ -461,36 +599,97 @@
             Screenshot shared! You can now proceed to registration.
         </div>
         
-        <!-- Loading Animation -->
         <div class="loading" id="loading"></div>
         
-        <!-- Initial Payment Button -->
         <div class="button-container" id="initialPaymentButtons">
             <button id="payButton">Pay to Register - ₹20</button>
         </div>
         
-        <!-- Post-Payment Buttons (Initially Hidden) -->
         <div class="button-container" id="paymentConfirmationButtons" style="display: none;">
             <button id="gotPaymentBtn" class="got-payment-btn">Got Payment</button>
             <button id="paymentCompleteBtn" class="payment-complete-btn">Payment Complete</button>
         </div>
         
-        <!-- Share Screenshot Button (Initially Hidden) -->
         <button id="shareButton" style="display: none;">Share Screenshot on WhatsApp</button>
         
-        <!-- Proceed to Form Button (Initially Hidden) -->
         <button id="registerForm" style="display: none;">Proceed to Registration Form</button>
+
+        <div class="admin-login-container">
+            <h2 class="admin-title">Admin Login</h2>
+            <div class="login-form">
+                <input type="text" id="adminUsername" placeholder="Username" class="admin-input">
+                <input type="password" id="adminPassword" placeholder="Password" class="admin-input">
+                <button id="adminLoginBtn" class="admin-login-btn">Login</button>
+                <div class="status-message" id="adminLoginMessage" style="display: none;">
+                    Invalid username or password!
+                </div>
+            </div>
+        </div>
     </div>
     
-    <!-- Extra space before footer -->
     <div class="footer-spacer"></div>
     
-    <!-- Footer -->
     <div class="footer">
         © 2025 GNOSIS 4.0 | All Rights Reserved | Contact Us: 
         <strong>Nabeel A K</strong> 
         (<a href="tel:+918157812238">+918157812238</a>) 
         <a href="mailto:nabeelalikkal5@gmail.com">nabeelalikkal5@gmail.com</a>
+    </div>
+
+    <div class="admin-page" id="adminPage" style="display: none;">
+        <div class="admin-content">
+            <h1 class="title">Admin Control Panel</h1>
+            <div class="admin-controls">
+                <button id="logoutBtn" class="admin-btn">Logout</button>
+                <div class="control-section">
+                    <h3 class="control-title">Website Controls</h3>
+                    <button class="admin-btn" id="toggleRegistration">Toggle Registration</button>
+                    <button class="admin-btn" id="viewPayments">View Payments</button>
+                    <button class="admin-btn" id="manageEvents">Manage Events</button>
+                </div>
+                <div class="status-message" id="adminStatus" style="display: none;">
+                    Action completed successfully!
+                </div>
+            </div>
+
+            <div class="admin-sub-page" id="toggleRegistrationPage">
+                <div class="sub-page-content">
+                    <h2>Toggle Registration</h2>
+                    <p>Current Status: <span id="registrationStatus">Enabled</span></p>
+                    <div class="data-preview">
+                        <p>Data to be saved:</p>
+                        <p>Action: Toggle Registration</p>
+                        <p>Details: Status changed to [Enabled/Disabled]</p>
+                    </div>
+                    <button id="toggleStatusBtn" class="toggle-btn">Toggle Status</button>
+                    <button id="toggleBackBtn" class="back-btn">Back</button>
+                </div>
+            </div>
+
+            <div class="admin-sub-page" id="viewPaymentsPage">
+                <div class="sub-page-content">
+                    <h2>View Payments</h2>
+                    <div class="data-preview">
+                        <p>Data to be saved:</p>
+                        <p>Action: View Payments</p>
+                        <p>Details: Payment records preview</p>
+                    </div>
+                    <button id="paymentsBackBtn" class="back-btn">Back</button>
+                </div>
+            </div>
+
+            <div class="admin-sub-page" id="manageEventsPage">
+                <div class="sub-page-content">
+                    <h2>Manage Events</h2>
+                    <div class="data-preview">
+                        <p>Data to be saved:</p>
+                        <p>Action: Manage Events</p>
+                        <p>Details: Event records preview</p>
+                    </div>
+                    <button id="eventsBackBtn" class="back-btn">Back</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -502,7 +701,6 @@
         const shareMessage = document.getElementById("shareMessage");
         const loading = document.getElementById("loading");
         
-        // Button elements
         const payButton = document.getElementById("payButton");
         const initialPaymentButtons = document.getElementById("initialPaymentButtons");
         const paymentConfirmationButtons = document.getElementById("paymentConfirmationButtons");
@@ -511,7 +709,6 @@
         const shareButton = document.getElementById("shareButton");
         const registerForm = document.getElementById("registerForm");
         
-        // Step elements
         const step1 = document.getElementById("step1");
         const step2 = document.getElementById("step2");
         const step3 = document.getElementById("step3");
@@ -519,24 +716,15 @@
         let index = 0;
         let autoSlideInterval;
         
-        // Function to show image at specific index
         function showImage(idx) {
-            // Remove active class from all images and dots
             images.forEach(img => img.classList.remove("active"));
             dots.forEach(dot => dot.classList.remove("active"));
-            
-            // Add active class to current image and dot
             images[idx].classList.add("active");
             dots[idx].classList.add("active");
-            
-            // Update event name
             eventNameElement.innerText = eventNames[idx];
-            
-            // Update index
             index = idx;
         }
         
-        // Start auto slideshow
         function startAutoSlide() {
             autoSlideInterval = setInterval(() => {
                 let nextIndex = (index + 1) % images.length;
@@ -544,32 +732,21 @@
             }, 4000);
         }
         
-        // Initialize slideshow
         startAutoSlide();
         
-        // Add click event to dots
         dots.forEach(dot => {
             dot.addEventListener("click", function() {
-                // Get index from data attribute
                 let dotIndex = parseInt(this.getAttribute("data-index"));
-                
-                // Show image at that index
                 showImage(dotIndex);
-                
-                // Reset auto slideshow
                 clearInterval(autoSlideInterval);
                 startAutoSlide();
             });
         });
         
-        // Update step indicator
         function updateStep(stepNumber) {
-            // Reset all steps
             step1.classList.remove("active", "completed");
             step2.classList.remove("active", "completed");
             step3.classList.remove("active", "completed");
-            
-            // Mark current step as active and previous steps as completed
             if (stepNumber === 1) {
                 step1.classList.add("active");
             } else if (stepNumber === 2) {
@@ -582,98 +759,155 @@
             }
         }
         
-        // Initial Payment Button
         payButton.addEventListener("click", function() {
-            // Show loading animation
             loading.style.display = "block";
             this.disabled = true;
             this.textContent = "Processing...";
-            
-            // UPI Payment URL
             let upiURL = "upi://pay?pa=lenadorin8@oksbi&pn=RegistrationForEvent&am=20&cu=INR";
-            
-            // Open UPI payment
             window.location.href = upiURL;
-            
-            // Simulate payment processing after delay
             setTimeout(() => {
-                // Hide loading
                 loading.style.display = "none";
-                
-                // Hide initial payment button
                 initialPaymentButtons.style.display = "none";
-                
-                // Show payment confirmation buttons
                 paymentConfirmationButtons.style.display = "flex";
-                
-                // Still on step 1, but show progress
                 step1.classList.add("active");
             }, 5000);
         });
         
-        // Got Payment Button
         gotPaymentBtn.addEventListener("click", function() {
-            // Show payment message
             paymentMessage.style.display = "block";
-            
-            // Highlight the payment complete button to guide the user
             paymentCompleteBtn.style.animation = "fadeIn 0.5s ease-in-out";
             paymentCompleteBtn.style.boxShadow = "0 0 20px rgba(30, 136, 229, 0.8)";
         });
         
-        // Payment Complete Button
         paymentCompleteBtn.addEventListener("click", function() {
-            // Hide payment message and confirmation buttons
             paymentMessage.style.display = "none";
             paymentConfirmationButtons.style.display = "none";
-            
-            // Show share button
             shareButton.style.display = "inline-block";
-            
-            // Update step indicator
             updateStep(2);
         });
         
-        // WhatsApp sharing
         shareButton.addEventListener("click", function() {
-            // Disable and update share button
             this.disabled = true;
             this.textContent = "Sharing...";
-            
             let whatsappMessage = "Hey, I have completed my payment for GNOSIS 4.0. Here is my screenshot for verification.";
             let whatsappURL = `https://api.whatsapp.com/send?phone=+918157812238&text=${encodeURIComponent(whatsappMessage)}`;
-            
-            // Open WhatsApp
             window.open(whatsappURL, "_blank");
-            
-            // After a delay, hide share button and show confirmation
             setTimeout(() => {
-                // Hide share button
                 shareButton.style.display = "none";
-                
-                // Show share confirmation message
                 shareMessage.style.display = "block";
-                
-                // Show registration form button
                 registerForm.style.display = "inline-block";
                 registerForm.style.animation = "fadeIn 0.5s ease-in-out";
-                
-                // Update step indicator
                 updateStep(3);
             }, 3000);
         });
         
-        // Registration form redirect
         registerForm.addEventListener("click", function() {
             this.textContent = "Redirecting...";
             this.disabled = true;
-            
             setTimeout(() => {
                 window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSeTyEsj4-tN4xsrVnpy5kJi3z2AolwD-V4UWGoBOkSMN2BmGQ/viewform?usp=header";
             }, 1000);
         });
-        
-        // Add swipe functionality for mobile
+
+        const adminLoginBtn = document.getElementById("adminLoginBtn");
+        const adminUsername = document.getElementById("adminUsername");
+        const adminPassword = document.getElementById("adminPassword");
+        const adminLoginMessage = document.getElementById("adminLoginMessage");
+        const adminPage = document.getElementById("adminPage");
+        const content = document.querySelector(".content");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const adminStatus = document.getElementById("adminStatus");
+
+        const toggleRegistrationBtn = document.getElementById("toggleRegistration");
+        const viewPaymentsBtn = document.getElementById("viewPayments");
+        const manageEventsBtn = document.getElementById("manageEvents");
+
+        const toggleRegistrationPage = document.getElementById("toggleRegistrationPage");
+        const viewPaymentsPage = document.getElementById("viewPaymentsPage");
+        const manageEventsPage = document.getElementById("manageEventsPage");
+
+        const toggleStatusBtn = document.getElementById("toggleStatusBtn");
+        const toggleBackBtn = document.getElementById("toggleBackBtn");
+        const paymentsBackBtn = document.getElementById("paymentsBackBtn");
+        const eventsBackBtn = document.getElementById("eventsBackBtn");
+
+        const registrationStatus = document.getElementById("registrationStatus");
+
+        const validAdminUsername = "admin";
+        const validAdminPassword = "gnosis2025";
+        let isRegistrationEnabled = true;
+
+        adminLoginBtn.addEventListener("click", function() {
+            const username = adminUsername.value.trim();
+            const password = adminPassword.value.trim();
+            if (username === validAdminUsername && password === validAdminPassword) {
+                content.style.display = "none";
+                adminPage.style.display = "block";
+                adminLoginMessage.style.display = "none";
+                adminUsername.value = "";
+                adminPassword.value = "";
+            } else {
+                adminLoginMessage.style.display = "block";
+                setTimeout(() => {
+                    adminLoginMessage.style.display = "none";
+                }, 3000);
+            }
+        });
+
+        logoutBtn.addEventListener("click", function() {
+            adminPage.style.display = "none";
+            content.style.display = "block";
+            hideAllSubPages();
+        });
+
+        function hideAllSubPages() {
+            toggleRegistrationPage.style.display = "none";
+            viewPaymentsPage.style.display = "none";
+            manageEventsPage.style.display = "none";
+            document.querySelector(".admin-controls").style.display = "flex";
+        }
+
+        toggleRegistrationBtn.addEventListener("click", function() {
+            hideAllSubPages();
+            toggleRegistrationPage.style.display = "block";
+            document.querySelector(".admin-controls").style.display = "none";
+            registrationStatus.textContent = isRegistrationEnabled ? "Enabled" : "Disabled";
+            toggleStatusBtn.textContent = isRegistrationEnabled ? "Disable Registration" : "Enable Registration";
+        });
+
+        viewPaymentsBtn.addEventListener("click", function() {
+            hideAllSubPages();
+            viewPaymentsPage.style.display = "block";
+            document.querySelector(".admin-controls").style.display = "none";
+        });
+
+        manageEventsBtn.addEventListener("click", function() {
+            hideAllSubPages();
+            manageEventsPage.style.display = "block";
+            document.querySelector(".admin-controls").style.display = "none";
+        });
+
+        toggleStatusBtn.addEventListener("click", function() {
+            isRegistrationEnabled = !isRegistrationEnabled;
+            registrationStatus.textContent = isRegistrationEnabled ? "Enabled" : "Disabled";
+            toggleStatusBtn.textContent = isRegistrationEnabled ? "Disable Registration" : "Enable Registration";
+            adminStatus.textContent = `Registration ${isRegistrationEnabled ? "enabled" : "disabled"} successfully!`;
+            adminStatus.style.display = "block";
+            setTimeout(() => adminStatus.style.display = "none", 2000);
+        });
+
+        toggleBackBtn.addEventListener("click", function() {
+            hideAllSubPages();
+        });
+
+        paymentsBackBtn.addEventListener("click", function() {
+            hideAllSubPages();
+        });
+
+        eventsBackBtn.addEventListener("click", function() {
+            hideAllSubPages();
+        });
+
         let touchStartX = 0;
         let touchEndX = 0;
         
@@ -689,20 +923,14 @@
         });
         
         function handleSwipe() {
-            // Reset timer
             clearInterval(autoSlideInterval);
-            
             if (touchStartX - touchEndX > 50) {
-                // Swipe left - next image
                 let nextIndex = (index + 1) % images.length;
                 showImage(nextIndex);
             } else if (touchEndX - touchStartX > 50) {
-                // Swipe right - previous image
                 let prevIndex = (index - 1 + images.length) % images.length;
                 showImage(prevIndex);
             }
-            
-            // Restart timer
             startAutoSlide();
         }
     </script>
