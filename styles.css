@@ -1,0 +1,117 @@
+/* Ensure video container takes full screen */
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+/* Make the video adjust to screen size */
+.video-container video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover; /* Ensures the video fills the screen without distortion */
+    transform: translate(-50%, -50%);
+}
+
+/* Dark Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Center Content */
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    z-index: 2;
+}
+
+/* Event Image Display */
+.event-container {
+    width: 300px;
+    height: 200px;
+    position: relative;
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+/* Event Image Styles */
+.event-image {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+/* Event Name Styling */
+.event-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+    transition: opacity 1s ease-in-out;
+}
+
+/* Button Styling */
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    color: white;
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    border: none;
+    cursor: pointer;
+    border-radius: 50px;
+    margin-top: 20px;
+    transition: all 0.3s ease-in-out;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(255, 65, 108, 0.5);
+}
+
+button:hover {
+    background: linear-gradient(45deg, #ff4b2b, #ff416c);
+    transform: scale(1.1);
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+    .event-container {
+        width: 80%;
+        height: 150px;
+    }
+
+    .content h1 {
+        font-size: 2rem;
+    }
+
+    .content p {
+        font-size: 1rem;
+    }
+
+    button {
+        font-size: 16px;
+        padding: 12px 24px;
+    }
+
+    .event-name {
+        font-size: 18px;
+    }
+}
