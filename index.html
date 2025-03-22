@@ -198,6 +198,14 @@
             background: linear-gradient(45deg, #0D47A1, #1E88E5);
         }
         
+        .official-login-btn {
+            background: linear-gradient(45deg, #E91E63, #9C27B0);
+        }
+
+        .official-login-btn:hover {
+            background: linear-gradient(45deg, #9C27B0, #E91E63);
+        }
+        
         .status-message {
             background: rgba(0, 0, 0, 0.6);
             padding: 15px 25px;
@@ -320,14 +328,44 @@
             margin-bottom: 80px;
         }
         
+        .instructions-container {
+            margin: 30px auto;
+            width: 100%;
+            max-width: 600px;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .instructions-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #f0f0f0;
+            margin-bottom: 10px;
+        }
+
+        .instructions-content {
+            font-size: 0.95rem;
+            color: #d0d0d0;
+            line-height: 1.5;
+        }
+
+        .instructions-content strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
         .admin-login-container {
-            margin: 50px auto;
+            margin: 40px auto;
             width: 100%;
             max-width: 400px;
             padding: 20px;
             background: rgba(0, 0, 0, 0.6);
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none; /* Hidden by default */
         }
 
         .admin-title {
@@ -522,7 +560,7 @@
                 font-size: 0.8rem;
             }
 
-            .admin-login-container {
+            .instructions-container, .admin-login-container {
                 width: 90%;
             }
             
@@ -614,7 +652,24 @@
         
         <button id="registerForm" style="display: none;">Proceed to Registration Form</button>
 
-        <div class="admin-login-container">
+        <div class="instructions-container">
+            <h2 class="instructions-title">Instructions</h2>
+            <div class="instructions-content">
+                <p><strong>Registration Fee:</strong> ₹20</p>
+                <p>Complete the payment to participate in GNOSIS 4.0.</p>
+                <p><strong>Payment Verification:</strong> After payment, upload your receipt via WhatsApp to the designated contact. Once verified, proceed with registration via the Google Form.</p>
+                <p><strong>Refund Policy:</strong> The registration fee is non-refundable.</p>
+                <p><strong>Application Status:</strong> Incomplete applications without payment verification will be rejected.</p>
+            </div>
+        </div>
+
+        <!-- Official Login Button -->
+        <div class="button-container">
+            <button id="officialLoginBtn" class="official-login-btn">Official Login</button>
+        </div>
+
+        <!-- Admin Login Container (Hidden by Default) -->
+        <div class="admin-login-container" id="adminLoginContainer">
             <h2 class="admin-title">Admin Login</h2>
             <div class="login-form">
                 <input type="text" id="adminUsername" placeholder="Username" class="admin-input">
@@ -809,6 +864,15 @@
             }, 1000);
         });
 
+        // Official Login Button Logic
+        const officialLoginBtn = document.getElementById("officialLoginBtn");
+        const adminLoginContainer = document.getElementById("adminLoginContainer");
+
+        officialLoginBtn.addEventListener("click", function() {
+            adminLoginContainer.style.display = "block";
+            officialLoginBtn.style.display = "none"; // Optionally hide the button after clicking
+        });
+
         const adminLoginBtn = document.getElementById("adminLoginBtn");
         const adminUsername = document.getElementById("adminUsername");
         const adminPassword = document.getElementById("adminPassword");
@@ -846,6 +910,7 @@
                 adminLoginMessage.style.display = "none";
                 adminUsername.value = "";
                 adminPassword.value = "";
+                adminLoginContainer.style.display = "none"; // Hide login form after successful login
             } else {
                 adminLoginMessage.style.display = "block";
                 setTimeout(() => {
@@ -858,6 +923,7 @@
             adminPage.style.display = "none";
             content.style.display = "block";
             hideAllSubPages();
+            officialLoginBtn.style.display = "block"; // Show the Official Login button again
         });
 
         function hideAllSubPages() {
