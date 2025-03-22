@@ -8,8 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-
-
         * {
             margin: 0;
             padding: 0;
@@ -20,6 +18,8 @@
         body {
             overflow-x: hidden;
             background-color: #000;
+            min-height: 100vh;
+            padding-bottom: 100px; /* Extra space at bottom */
         }
         
         /* Background Video */
@@ -56,16 +56,15 @@
         
         /* Center Content */
         .content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
             text-align: center;
             color: white;
             width: 90%;
             max-width: 800px;
+            margin: 60px auto;
             z-index: 2;
             padding: 20px;
+            padding-bottom: 150px; /* Space for footer */
         }
         
         /* Title with Glow Effect */
@@ -159,6 +158,7 @@
             flex-wrap: wrap;
             gap: 15px;
             margin: 20px 0;
+            margin-bottom: 70px; /* Extra space after buttons */
         }
         
         /* Button Styling */
@@ -176,6 +176,8 @@
             transform: translateY(0);
             opacity: 0.95;
             min-width: 200px;
+            position: relative;
+            z-index: 3;
         }
         
         button:hover {
@@ -232,16 +234,39 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Footer */
+        /* Footer - Updated Styling */
         .footer {
-            position: fixed;
-            bottom: 20px;
-            left: 0;
+            position: static; /* Not fixed or relative */
             width: 100%;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.7);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 20px 0;
             font-size: 0.9rem;
-            z-index: 10;
+            z-index: 1;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 100px;
+            text-align: center;
+            line-height: 1.5;
+        }
+        
+        /* Contact links styling */
+        .footer a {
+            color: #EC6EAD;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: #3494E6;
+            text-decoration: underline;
+        }
+
+        /* Space before footer */
+        .footer-spacer {
+            height: 150px;
+            width: 100%;
+            clear: both;
         }
 
         /* Loading Animation */
@@ -309,6 +334,11 @@
             background-color: #4CAF50;
         }
         
+        /* Individual buttons with extra space */
+        #shareButton, #registerForm {
+            margin-bottom: 80px;
+        }
+        
         /* Responsive Fixes */
         @media (max-width: 768px) {
             .title {
@@ -337,6 +367,7 @@
                 width: 100%;
                 max-width: 300px;
                 margin: 15px auto;
+                margin-bottom: 50px;
             }
             
             .event-name {
@@ -350,6 +381,11 @@
             
             .step {
                 margin: 10px;
+            }
+            
+            .footer {
+                padding: 15px 10px;
+                font-size: 0.8rem;
             }
         }
         
@@ -446,14 +482,16 @@
         <button id="registerForm" style="display: none;">Proceed to Registration Form</button>
     </div>
     
+    <!-- Extra space before footer -->
+    <div class="footer-spacer"></div>
+    
     <!-- Footer -->
-   <!-- Footer -->
-<div class="footer">
-    © 2025 GNOSIS 4.0 | All Rights Reserved | 
-    <span class="contact-info">Contact Us: <strong>Nabeel A K</strong> 
-    (<a href="tel:+918157812238">+918157812238</a>) 
-    <a href="mailto:nabeelalikkal5@gmail.com">nabeelalikkal5@gmail.com</a></span>
-</div>
+    <div class="footer">
+        © 2025 GNOSIS 4.0 | All Rights Reserved | Contact Us: 
+        <strong>Nabeel A K</strong> 
+        (<a href="tel:+918157812238">+918157812238</a>) 
+        <a href="mailto:nabeelalikkal5@gmail.com">nabeelalikkal5@gmail.com</a>
+    </div>
 
     <script>
         const eventNames = ["Gaming Tournament", "Digital Drawing", "Coding Challenge", "Project Expo"];
