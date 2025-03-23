@@ -667,6 +667,7 @@
                 <p><strong>Registration Fee:</strong> ₹20</p>
                 <p>Complete the payment to participate in GNOSIS 4.0.</p>
                 <p><strong>Payment Verification:</strong> After payment, upload your receipt via WhatsApp to the designated contact. Once verified, proceed with registration via the Google Form.</p>
+                <p><strong>Manual Payment:</strong> If the button fails, send ₹20 to <strong>lenadorin8@oksbi</strong> via your UPI app and upload the screenshot.</p>
                 <p><strong>Refund Policy:</strong> The registration fee is non-refundable.</p>
                 <p><strong>Application Status:</strong> Incomplete applications without payment verification will be rejected.</p>
             </div>
@@ -844,9 +845,14 @@
             loading.style.display = "block";
             this.disabled = true;
             this.textContent = "Processing...";
-            let upiURL = "upi://pay?pa=nabeelalikkal5-1@okhdfcbank&pn=Gnosis%20Registration&am=20&cu=INR&tn=Gnosis4Payment";
+
+            // UPI link for ₹20 payment
+            let upiURL = "upi://pay?pa=lenadorin8@oksbi&pn=Gnosis%20Registration&am=20.00&cu=INR&tn=Gnosis4Payment";
+            console.log("UPI URL:", upiURL); // Debug: Check the URL in console
+
             try {
-                window.open(upiURL, "_blank");
+                const paymentWindow = window.open(upiURL, "_blank");
+                if (!paymentWindow) throw new Error("Popup blocked or no UPI app found");
                 setTimeout(() => {
                     loading.style.display = "none";
                     initialPaymentButtons.style.display = "none";
@@ -857,9 +863,10 @@
                 loading.style.display = "none";
                 this.disabled = false;
                 this.textContent = "Pay to Register - ₹20";
-                errorMessage.textContent = "Failed to open UPI app. Please ensure a UPI app is installed.";
+                errorMessage.textContent = "UPI payment failed. Send ₹20 to lenadorin8@oksbi manually via your UPI app.";
                 errorMessage.style.display = "block";
-                setTimeout(() => errorMessage.style.display = "none", 3000);
+                console.error("Payment Error:", error);
+                setTimeout(() => errorMessage.style.display = "none", 5000);
             }
         });
         
