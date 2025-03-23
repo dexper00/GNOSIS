@@ -22,6 +22,81 @@
             padding-bottom: 100px;
         }
         
+        .header-container {
+            position: relative;
+            text-align: center;
+            padding: 20px 0;
+            z-index: 2;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+        }
+
+        .college-logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 15px;
+        }
+
+        .college-logo, .cesa-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .college-logo:hover, .cesa-logo:hover {
+            transform: scale(1.1);
+        }
+
+        .college-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00C4CC, #FF6F61);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(0, 196, 204, 0.5);
+            letter-spacing: 1.5px;
+            margin-bottom: 5px;
+        }
+
+        .department-name {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .college-logo, .cesa-logo {
+                width: 60px;
+                height: 60px;
+            }
+            .college-name {
+                font-size: 1.8rem;
+            }
+            .department-name {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .college-logo, .cesa-logo {
+                width: 50px;
+                height: 50px;
+            }
+            .college-name {
+                font-size: 1.5rem;
+            }
+            .department-name {
+                font-size: 1rem;
+            }
+            .college-logo-container {
+                gap: 20px;
+            }
+        }
+        
         .video-container {
             position: fixed;
             top: 0;
@@ -230,6 +305,53 @@
         
         .share-message {
             border-left: 4px solid #2196F3;
+        }
+
+        .registration-complete-message {
+            border-left: 4px solid #4CAF50;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .tick-mark {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #4CAF50;
+            position: relative;
+            animation: tickAnimation 1s ease-in-out;
+        }
+
+        .tick-mark::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 18px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+            top: 4px;
+            left: 10px;
+        }
+
+        @keyframes tickAnimation {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .error-message {
@@ -621,6 +743,15 @@
     </style>
 </head>
 <body>
+    <div class="header-container">
+        <div class="college-logo-container">
+            <img src="images/college-logo.png" alt="College Logo" class="college-logo">
+            <img src="images/cesa-logo.png" alt="CESA Logo" class="cesa-logo">
+        </div>
+        <h1 class="college-name">Kerala Government Polytechnic College, Kozhikode</h1>
+        <h2 class="department-name">Department of Computer Engineering</h2>
+    </div>
+
     <div class="video-container">
         <video autoplay loop muted playsinline>
             <source src="background.mp4" type="video/mp4">
@@ -671,6 +802,10 @@
         
         <div class="status-message share-message" id="shareMessage">
             Screenshot shared! You can now proceed to registration.
+        </div>
+
+        <div class="status-message registration-complete-message" id="registrationMessage" style="display: none;">
+            <span class="tick-mark"></span> Registration Completed!
         </div>
 
         <div class="status-message error-message" id="errorMessage" style="display: none;">
@@ -803,6 +938,7 @@
         const eventNameElement = document.getElementById("eventName");
         const paymentMessage = document.getElementById("paymentMessage");
         const shareMessage = document.getElementById("shareMessage");
+        const registrationMessage = document.getElementById("registrationMessage");
         const errorMessage = document.getElementById("errorMessage");
         const loading = document.getElementById("loading");
         
@@ -1013,6 +1149,10 @@
                 setTimeout(() => {
                     this.textContent = "Proceed to Registration Form";
                     this.disabled = false;
+                    shareMessage.style.display = "none";
+                    registerForm.style.display = "none";
+                    registrationMessage.style.display = "flex";
+                    updateStep(3);
                 }, 2000);
             } catch (error) {
                 this.textContent = "Proceed to Registration Form";
