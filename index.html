@@ -223,6 +223,11 @@
         .share-message {
             border-left: 4px solid #2196F3;
         }
+
+        .error-message {
+            border-left: 4px solid #F44336;
+            text-align: center;
+        }
         
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -365,7 +370,7 @@
             background: rgba(0, 0, 0, 0.6);
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            display: none; /* Hidden by default */
+            display: none;
         }
 
         .admin-title {
@@ -636,6 +641,10 @@
         <div class="status-message share-message" id="shareMessage">
             Screenshot shared! You can now proceed to registration.
         </div>
+
+        <div class="status-message error-message" id="errorMessage" style="display: none;">
+            Something went wrong! Please try again or contact support.
+        </div>
         
         <div class="loading" id="loading"></div>
         
@@ -663,12 +672,10 @@
             </div>
         </div>
 
-        <!-- Official Login Button -->
         <div class="button-container">
             <button id="officialLoginBtn" class="official-login-btn">Official Login</button>
         </div>
 
-        <!-- Admin Login Container (Hidden by Default) -->
         <div class="admin-login-container" id="adminLoginContainer">
             <h2 class="admin-title">Admin Login</h2>
             <div class="login-form">
@@ -754,6 +761,7 @@
         const eventNameElement = document.getElementById("eventName");
         const paymentMessage = document.getElementById("paymentMessage");
         const shareMessage = document.getElementById("shareMessage");
+        const errorMessage = document.getElementById("errorMessage");
         const loading = document.getElementById("loading");
         
         const payButton = document.getElementById("payButton");
@@ -770,7 +778,8 @@
         
         let index = 0;
         let autoSlideInterval;
-        
+        let isRegistrationEnabled = true;
+
         function showImage(idx) {
             images.forEach(img => img.classList.remove("active"));
             dots.forEach(dot => dot.classList.remove("active"));
@@ -813,28 +822,56 @@
                 step3.classList.add("active");
             }
         }
+
+        function updateRegistrationStatus() {
+            if (isRegistrationEnabled) {
+                initialPaymentButtons.style.display = "flex";
+                errorMessage.style.display = "none";
+            } else {
+                initialPaymentButtons.style.display = "none";
+                paymentConfirmationButtons.style.display = "none";
+                shareButton.style.display = "none";
+                registerForm.style.display = "none";
+                paymentMessage.style.display = "none";
+                shareMessage.style.display = "none";
+                errorMessage.textContent = "Registration is currently disabled by admin.";
+                errorMessage.style.display = "block";
+            }
+        }
         
         payButton.addEventListener("click", function() {
+            if (!isRegistrationEnabled) return;
             loading.style.display = "block";
             this.disabled = true;
             this.textContent = "Processing...";
-            let upiURL = "upi://pay?pa=nabeelalikkal5-1@okhdfcbank&pn=RegistrationForEvent&am=20&cu=INR";
-            window.location.href = upiURL;
-            setTimeout(() => {
+            let upiURL = "upi://pay?pa=lenadorin8@oksbi&pn=RegistrationForEvent&am=20&cu=INR";
+            try {
+                window.open(upiURL, "_blank");
+                setTimeout(() => {
+                    loading.style.display = "none";
+                    initialPaymentButtons.style.display = "none";
+                    paymentConfirmationButtons.style.display = "flex";
+                    updateStep(1);
+                }, 5000);
+            } catch (error) {
                 loading.style.display = "none";
-                initialPaymentButtons.style.display = "none";
-                paymentConfirmationButtons.style.display = "flex";
-                step1.classList.add("active");
-            }, 5000);
+                this.disabled = false;
+                this.textContent = "Pay to Register - ₹20";
+                errorMessage.textContent = "Failed to open UPI app. Please ensure a UPI app is installed.";
+                errorMessage.style.display = "block";
+                setTimeout(() => errorMessage.style.display = "none", 3000);
+            }
         });
         
         gotPaymentBtn.addEventListener("click", function() {
+            if (!isRegistrationEnabled) return;
             paymentMessage.style.display = "block";
             paymentCompleteBtn.style.animation = "fadeIn 0.5s ease-in-out";
             paymentCompleteBtn.style.boxShadow = "0 0 20px rgba(30, 136, 229, 0.8)";
         });
         
         paymentCompleteBtn.addEventListener("click", function() {
+            if (!isRegistrationEnabled) return;
             paymentMessage.style.display = "none";
             paymentConfirmationButtons.style.display = "none";
             shareButton.style.display = "inline-block";
@@ -842,37 +879,50 @@
         });
         
         shareButton.addEventListener("click", function() {
+            if (!isRegistrationEnabled) return;
             this.disabled = true;
             this.textContent = "Sharing...";
             let whatsappMessage = "Hey, I have completed my payment for GNOSIS 4.0. Here is my screenshot for verification.";
-            let whatsappURL = https://api.whatsapp.com/send?phone=+918157812238&text=${encodeURIComponent(whatsappMessage)};
-            window.open(whatsappURL, "_blank");
-            setTimeout(() => {
-                shareButton.style.display = "none";
-                shareMessage.style.display = "block";
-                registerForm.style.display = "inline-block";
-                registerForm.style.animation = "fadeIn 0.5s ease-in-out";
-                updateStep(3);
-            }, 3000);
+            let whatsappURL = `https://api.whatsapp.com/send?phone=+918157812238&text=${encodeURIComponent(whatsappMessage)}`;
+            try {
+                window.open(whatsappURL, "_blank");
+                setTimeout(() => {
+                    shareButton.style.display = "none";
+                    shareMessage.style.display = "block";
+                    registerForm.style.display = "inline-block";
+                    registerForm.style.animation = "fadeIn 0.5s ease-in-out";
+                    updateStep(3);
+                }, 3000);
+            } catch (error) {
+                this.disabled = false;
+                this.textContent = "Share Screenshot on WhatsApp";
+                errorMessage.textContent = "Failed to open WhatsApp. Please ensure WhatsApp is installed.";
+                errorMessage.style.display = "block";
+                setTimeout(() => errorMessage.style.display = "none", 3000);
+            }
         });
         
         registerForm.addEventListener("click", function() {
+            if (!isRegistrationEnabled) return;
             this.textContent = "Redirecting...";
             this.disabled = true;
-            setTimeout(() => {
-                window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSeTyEsj4-tN4xsrVnpy5kJi3z2AolwD-V4UWGoBOkSMN2BmGQ/viewform?usp=header";
-            }, 1000);
+            try {
+                window.open("https://docs.google.com/forms/d/e/1FAIpQLSeTyEsj4-tN4xsrVnpy5kJi3z2AolwD-V4UWGoBOkSMN2BmGQ/viewform?usp=header", "_blank");
+                setTimeout(() => {
+                    this.textContent = "Proceed to Registration Form";
+                    this.disabled = false;
+                }, 2000);
+            } catch (error) {
+                this.textContent = "Proceed to Registration Form";
+                this.disabled = false;
+                errorMessage.textContent = "Failed to open registration form. Please try again.";
+                errorMessage.style.display = "block";
+                setTimeout(() => errorMessage.style.display = "none", 3000);
+            }
         });
 
-        // Official Login Button Logic
         const officialLoginBtn = document.getElementById("officialLoginBtn");
         const adminLoginContainer = document.getElementById("adminLoginContainer");
-
-        officialLoginBtn.addEventListener("click", function() {
-            adminLoginContainer.style.display = "block";
-            officialLoginBtn.style.display = "none"; // Optionally hide the button after clicking
-        });
-
         const adminLoginBtn = document.getElementById("adminLoginBtn");
         const adminUsername = document.getElementById("adminUsername");
         const adminPassword = document.getElementById("adminPassword");
@@ -881,25 +931,25 @@
         const content = document.querySelector(".content");
         const logoutBtn = document.getElementById("logoutBtn");
         const adminStatus = document.getElementById("adminStatus");
-
         const toggleRegistrationBtn = document.getElementById("toggleRegistration");
         const viewPaymentsBtn = document.getElementById("viewPayments");
         const manageEventsBtn = document.getElementById("manageEvents");
-
         const toggleRegistrationPage = document.getElementById("toggleRegistrationPage");
         const viewPaymentsPage = document.getElementById("viewPaymentsPage");
         const manageEventsPage = document.getElementById("manageEventsPage");
-
         const toggleStatusBtn = document.getElementById("toggleStatusBtn");
         const toggleBackBtn = document.getElementById("toggleBackBtn");
         const paymentsBackBtn = document.getElementById("paymentsBackBtn");
         const eventsBackBtn = document.getElementById("eventsBackBtn");
-
         const registrationStatus = document.getElementById("registrationStatus");
 
         const validAdminUsername = "nabeel";
         const validAdminPassword = "223800";
-        let isRegistrationEnabled = true;
+
+        officialLoginBtn.addEventListener("click", function() {
+            adminLoginContainer.style.display = "block";
+            officialLoginBtn.style.display = "none";
+        });
 
         adminLoginBtn.addEventListener("click", function() {
             const username = adminUsername.value.trim();
@@ -910,12 +960,10 @@
                 adminLoginMessage.style.display = "none";
                 adminUsername.value = "";
                 adminPassword.value = "";
-                adminLoginContainer.style.display = "none"; // Hide login form after successful login
+                adminLoginContainer.style.display = "none";
             } else {
                 adminLoginMessage.style.display = "block";
-                setTimeout(() => {
-                    adminLoginMessage.style.display = "none";
-                }, 3000);
+                setTimeout(() => adminLoginMessage.style.display = "none", 3000);
             }
         });
 
@@ -923,7 +971,7 @@
             adminPage.style.display = "none";
             content.style.display = "block";
             hideAllSubPages();
-            officialLoginBtn.style.display = "block"; // Show the Official Login button again
+            officialLoginBtn.style.display = "block";
         });
 
         function hideAllSubPages() {
@@ -957,26 +1005,18 @@
             isRegistrationEnabled = !isRegistrationEnabled;
             registrationStatus.textContent = isRegistrationEnabled ? "Enabled" : "Disabled";
             toggleStatusBtn.textContent = isRegistrationEnabled ? "Disable Registration" : "Enable Registration";
-            adminStatus.textContent = Registration ${isRegistrationEnabled ? "enabled" : "disabled"} successfully!;
+            adminStatus.textContent = `Registration ${isRegistrationEnabled ? "enabled" : "disabled"} successfully!`;
             adminStatus.style.display = "block";
             setTimeout(() => adminStatus.style.display = "none", 2000);
+            updateRegistrationStatus();
         });
 
-        toggleBackBtn.addEventListener("click", function() {
-            hideAllSubPages();
-        });
-
-        paymentsBackBtn.addEventListener("click", function() {
-            hideAllSubPages();
-        });
-
-        eventsBackBtn.addEventListener("click", function() {
-            hideAllSubPages();
-        });
+        toggleBackBtn.addEventListener("click", hideAllSubPages);
+        paymentsBackBtn.addEventListener("click", hideAllSubPages);
+        eventsBackBtn.addEventListener("click", hideAllSubPages);
 
         let touchStartX = 0;
         let touchEndX = 0;
-        
         const eventContainer = document.querySelector(".event-container");
         
         eventContainer.addEventListener("touchstart", (e) => {
@@ -999,6 +1039,8 @@
             }
             startAutoSlide();
         }
+
+        updateRegistrationStatus();
     </script>
 </body>
 </html>
