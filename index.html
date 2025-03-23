@@ -24,29 +24,36 @@
         
         .header-container {
             position: relative;
-            text-align: center;
-            padding: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 40px;
             z-index: 2;
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
         }
 
-        .college-logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            margin-bottom: 15px;
-        }
-
-        .college-logo, .cesa-logo {
+        .college-logo {
             width: 80px;
             height: 80px;
             object-fit: contain;
+            margin-right: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .cesa-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-left: 20px;
             transition: transform 0.3s ease;
         }
 
         .college-logo:hover, .cesa-logo:hover {
             transform: scale(1.1);
+        }
+
+        .college-text {
+            text-align: center;
         }
 
         .college-name {
@@ -79,6 +86,9 @@
             .department-name {
                 font-size: 1.2rem;
             }
+            .header-container {
+                padding: 15px 20px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -92,8 +102,8 @@
             .department-name {
                 font-size: 1rem;
             }
-            .college-logo-container {
-                gap: 20px;
+            .header-container {
+                padding: 10px 15px;
             }
         }
         
@@ -744,12 +754,12 @@
 </head>
 <body>
     <div class="header-container">
-        <div class="college-logo-container">
-            <img src="images/collegelogo.png" alt="College Logo" class="college-logo">
-            <img src="images/cesalogo.png" alt="CESA Logo" class="cesa-logo">
+        <img src="images/college-logo.png" alt="College Logo" class="college-logo">
+        <div class="college-text">
+            <h1 class="college-name">Kerala Government Polytechnic College, Kozhikode</h1>
+            <h2 class="department-name">Department of Computer Engineering</h2>
         </div>
-        <h1 class="college-name">Kerala Government Polytechnic College, Kozhikode</h1>
-        <h2 class="department-name">Department of Computer Engineering</h2>
+        <img src="images/cesa-logo.png" alt="CESA Logo" class="cesa-logo">
     </div>
 
     <div class="video-container">
@@ -821,7 +831,7 @@
         <div class="button-container" id="paymentConfirmationButtons" style="display: none;">
             <button id="gotPaymentBtn" class="got-payment-btn">Got Payment</button>
             <button id="payViaUPIBtn" class="upi-app-btn">Pay via UPI App</button>
-            <button id="paymentCompleteBtn" class="payment-complete-btn">Payment Complete</button>
+            <button id="paymentCompleteBtn" class="payment-complete-btn" style="display: none;">Payment Complete</button>
         </div>
         
         <div class="upi-select-container" id="upiSelectContainer">
@@ -1060,8 +1070,6 @@
         gotPaymentBtn.addEventListener("click", function() {
             if (!isRegistrationEnabled) return;
             paymentMessage.style.display = "block";
-            paymentCompleteBtn.style.animation = "fadeIn 0.5s ease-in-out";
-            paymentCompleteBtn.style.boxShadow = "0 0 20px rgba(30, 136, 229, 0.8)";
         });
         
         payViaUPIBtn.addEventListener("click", function() {
@@ -1097,6 +1105,9 @@
                     loading.style.display = "none";
                     upiSelect.value = ""; // Reset dropdown
                     paymentMessage.style.display = "block"; // Keep message visible
+                    paymentCompleteBtn.style.display = "inline-block"; // Show Payment Complete button
+                    paymentCompleteBtn.style.animation = "fadeIn 0.5s ease-in-out";
+                    paymentCompleteBtn.style.boxShadow = "0 0 20px rgba(30, 136, 229, 0.8)";
                 }, 2000);
             } catch (error) {
                 loading.style.display = "none";
