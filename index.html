@@ -370,6 +370,29 @@
             font-weight: 600;
         }
 
+        .upi-select-container {
+            display: none;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .upi-select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 200px;
+            cursor: pointer;
+        }
+
+        .upi-select:focus {
+            outline: none;
+            border-color: #EC6EAD;
+            box-shadow: 0 0 10px rgba(236, 110, 173, 0.3);
+        }
+
         .admin-login-container {
             margin: 40px auto;
             width: 100%;
@@ -643,7 +666,7 @@
         <div class="event-name" id="eventName">Gaming Tournament</div>
         
         <div class="status-message payment-message" id="paymentMessage">
-            Payment QR downloaded! Open your UPI app by clicking "Pay via UPI App" to scan the QR code (Gnosis4PaymentQR.png), pay ₹20, and take a screenshot.
+            Payment QR downloaded! Select your UPI app below to open it, scan the QR code (Gnosis4PaymentQR.png), pay ₹20, and take a screenshot.
         </div>
         
         <div class="status-message share-message" id="shareMessage">
@@ -666,6 +689,15 @@
             <button id="paymentCompleteBtn" class="payment-complete-btn">Payment Complete</button>
         </div>
         
+        <div class="upi-select-container" id="upiSelectContainer">
+            <select class="upi-select" id="upiSelect">
+                <option value="" disabled selected>Select UPI App</option>
+                <option value="gpay">Google Pay</option>
+                <option value="phonepe">PhonePe</option>
+                <option value="paytm">Paytm</option>
+            </select>
+        </div>
+        
         <button id="shareButton" style="display: none;">Share Screenshot on WhatsApp</button>
         
         <button id="registerForm" style="display: none;">Proceed to Registration Form</button>
@@ -675,7 +707,7 @@
             <div class="instructions-content">
                 <p><strong>Registration Fee:</strong> ₹20</p>
                 <p>Complete the payment to participate in GNOSIS 4.0.</p>
-                <p><strong>Payment Steps:</strong> Click "Pay to Register - ₹20" to download a QR code image (Gnosis4PaymentQR.png). Then, click "Pay via UPI App" to open your UPI app (e.g., Google Pay, PhonePe), select the QR code scan option, choose the downloaded image from your device, pay ₹20, and take a screenshot of the payment confirmation.</p>
+                <p><strong>Payment Steps:</strong> Click "Pay to Register - ₹20" to download a QR code image (Gnosis4PaymentQR.png). Then, click "Pay via UPI App", select your UPI app (e.g., Google Pay, PhonePe, Paytm) from the dropdown, open it, scan the QR code from your device, pay ₹20, and take a screenshot of the payment confirmation.</p>
                 <p><strong>Verification:</strong> Return to this site, click "Share Screenshot on WhatsApp" to upload your screenshot to the designated contact. Once verified, proceed with registration via the Google Form.</p>
                 <p><strong>Refund Policy:</strong> The registration fee is non-refundable.</p>
                 <p><strong>Application Status:</strong> Incomplete applications without payment verification will be rejected.</p>
@@ -780,6 +812,8 @@
         const gotPaymentBtn = document.getElementById("gotPaymentBtn");
         const payViaUPIBtn = document.getElementById("payViaUPIBtn");
         const paymentCompleteBtn = document.getElementById("paymentCompleteBtn");
+        const upiSelectContainer = document.getElementById("upiSelectContainer");
+        const upiSelect = document.getElementById("upiSelect");
         const shareButton = document.getElementById("shareButton");
         const registerForm = document.getElementById("registerForm");
         
@@ -841,6 +875,7 @@
             } else {
                 initialPaymentButtons.style.display = "none";
                 paymentConfirmationButtons.style.display = "none";
+                upiSelectContainer.style.display = "none";
                 shareButton.style.display = "none";
                 registerForm.style.display = "none";
                 paymentMessage.style.display = "none";
@@ -895,45 +930,52 @@
         
         payViaUPIBtn.addEventListener("click", function() {
             if (!isRegistrationEnabled) return;
-            loading.style.display = "block";
-            this.disabled = true;
-            this.textContent = "Opening UPI App...";
+            upiSelectContainer.style.display = "block";
+            payViaUPIBtn.style.display = "none"; // Hide button after clicking
+            paymentMessage.style.display = "block";
+        });
 
-            // Attempt to open a common UPI app (e.g., Google Pay or PhonePe)
-            const upiApps = [
-                "gpay://", // Google Pay
-                "phonepe://", // PhonePe
-                "upi://" // Generic UPI intent (may open default UPI app)
-            ];
+        upiSelect.addEventListener("change", function() {
+            if (!isRegistrationEnabled) return;
+            const selectedApp = this.value;
+            let appUrl;
 
-            let opened = false;
-            for (let app of upiApps) {
-                try {
-                    window.location.href = app; // Attempt to open the app
-                    opened = true;
+            switch (selectedApp) {
+                case "gpay":
+                    appUrl = "https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.paisa.user";
                     break;
-                } catch (e) {
-                    continue; // Try next app if this fails
-                }
+                case "phonepe":
+                    appUrl = "https://play.google.com/store/apps/details?id=com.phonepe.app";
+                    break;
+                case "paytm":
+                    appUrl = "https://play.google.com/store/apps/details?id=net.one97.paytm";
+                    break;
+                default:
+                    return;
             }
 
-            setTimeout(() => {
+            try {
+                loading.style.display = "block";
+                window.open(appUrl, "_blank"); // Open Play Store link or app if installed
+                setTimeout(() => {
+                    loading.style.display = "none";
+                    upiSelect.value = ""; // Reset dropdown
+                    paymentMessage.style.display = "block"; // Keep message visible
+                }, 2000);
+            } catch (error) {
                 loading.style.display = "none";
-                this.disabled = false;
-                this.textContent = "Pay via UPI App";
-                if (!opened) {
-                    errorMessage.textContent = "Failed to open UPI app. Please open your UPI app manually and scan the QR code.";
-                    errorMessage.style.display = "block";
-                    setTimeout(() => errorMessage.style.display = "none", 3000);
-                }
-                paymentMessage.style.display = "block"; // Keep message visible
-            }, 2000); // Delay to allow app to open
+                errorMessage.textContent = "Failed to open the UPI app. Please open it manually and scan the QR code.";
+                errorMessage.style.display = "block";
+                console.error("UPI App Error:", error);
+                setTimeout(() => errorMessage.style.display = "none", 3000);
+            }
         });
         
         paymentCompleteBtn.addEventListener("click", function() {
             if (!isRegistrationEnabled) return;
             paymentMessage.style.display = "none";
             paymentConfirmationButtons.style.display = "none";
+            upiSelectContainer.style.display = "none";
             shareButton.style.display = "inline-block";
             updateStep(2);
         });
