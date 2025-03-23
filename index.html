@@ -198,6 +198,14 @@
             background: linear-gradient(45deg, #0D47A1, #1E88E5);
         }
         
+        .upi-app-btn {
+            background: linear-gradient(45deg, #F06292, #D81B60);
+        }
+
+        .upi-app-btn:hover {
+            background: linear-gradient(45deg, #D81B60, #F06292);
+        }
+        
         .official-login-btn {
             background: linear-gradient(45deg, #E91E63, #9C27B0);
         }
@@ -531,20 +539,20 @@
                 height: 200px;
             }
             
-            button {
-                font-size: 16px;
-                padding: 12px 24px;
-                margin: 0;
-                width: 100%;
-                max-width: none;
-            }
-            
             .button-container {
                 flex-direction: column;
                 width: 100%;
                 max-width: 300px;
                 margin: 15px auto;
                 margin-bottom: 50px;
+            }
+            
+            button {
+                font-size: 16px;
+                padding: 12px 24px;
+                margin: 0;
+                width: 100%;
+                max-width: none;
             }
             
             .event-name {
@@ -635,7 +643,7 @@
         <div class="event-name" id="eventName">Gaming Tournament</div>
         
         <div class="status-message payment-message" id="paymentMessage">
-            Payment QR downloaded! Please scan it with your UPI app, pay ₹20, and return to upload the screenshot.
+            Payment QR downloaded! Either scan it with your UPI app or click "Pay via UPI App" to pay ₹20, then return to upload the screenshot.
         </div>
         
         <div class="status-message share-message" id="shareMessage">
@@ -654,6 +662,7 @@
         
         <div class="button-container" id="paymentConfirmationButtons" style="display: none;">
             <button id="gotPaymentBtn" class="got-payment-btn">Got Payment</button>
+            <button id="payViaUPIBtn" class="upi-app-btn">Pay via UPI App</button>
             <button id="paymentCompleteBtn" class="payment-complete-btn">Payment Complete</button>
         </div>
         
@@ -666,7 +675,12 @@
             <div class="instructions-content">
                 <p><strong>Registration Fee:</strong> ₹20</p>
                 <p>Complete the payment to participate in GNOSIS 4.0.</p>
-                <p><strong>Payment Steps:</strong> Click "Pay to Register - ₹20" to download a QR code image. Open your UPI app (e.g., Google Pay, PhonePe), select the QR code scan option, choose the downloaded image, pay ₹20, and take a screenshot of the payment confirmation.</p>
+                <p><strong>Payment Steps:</strong> Click "Pay to Register - ₹20" to download a QR code image. Then, either: 
+                    <ul>
+                        <li><strong>Option 1:</strong> Open your UPI app (e.g., Google Pay, PhonePe), select the QR code scan option, choose the downloaded image, pay ₹20, and take a screenshot of the payment confirmation.</li>
+                        <li><strong>Option 2:</strong> Click "Pay via UPI App" to select your UPI app directly, pay ₹20, and take a screenshot of the payment confirmation.</li>
+                    </ul>
+                </p>
                 <p><strong>Verification:</strong> Return to this site, click "Share Screenshot on WhatsApp" to upload your screenshot to the designated contact. Once verified, proceed with registration via the Google Form.</p>
                 <p><strong>Refund Policy:</strong> The registration fee is non-refundable.</p>
                 <p><strong>Application Status:</strong> Incomplete applications without payment verification will be rejected.</p>
@@ -769,6 +783,7 @@
         const initialPaymentButtons = document.getElementById("initialPaymentButtons");
         const paymentConfirmationButtons = document.getElementById("paymentConfirmationButtons");
         const gotPaymentBtn = document.getElementById("gotPaymentBtn");
+        const payViaUPIBtn = document.getElementById("payViaUPIBtn");
         const paymentCompleteBtn = document.getElementById("paymentCompleteBtn");
         const shareButton = document.getElementById("shareButton");
         const registerForm = document.getElementById("registerForm");
@@ -846,14 +861,12 @@
             this.disabled = true;
             this.textContent = "Downloading...";
 
-            // Path to your QR code image (ensure this file exists in your project directory)
-            const qrCodeUrl = "images/qr-code.png"; // Adjust path as needed
+            const qrCodeUrl = "images/qr-code.png"; // Ensure this path is correct
 
             try {
-                // Create a temporary link to download the QR code
                 const link = document.createElement("a");
                 link.href = qrCodeUrl;
-                link.download = "Gnosis4PaymentQR.png"; // Name of the downloaded file
+                link.download = "Gnosis4PaymentQR.png";
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -866,7 +879,7 @@
                     paymentMessage.style.display = "block";
                     paymentConfirmationButtons.style.display = "flex";
                     updateStep(1);
-                }, 2000); // Reduced timeout since no external redirection
+                }, 2000);
             } catch (error) {
                 loading.style.display = "none";
                 this.disabled = false;
@@ -883,6 +896,33 @@
             paymentMessage.style.display = "block";
             paymentCompleteBtn.style.animation = "fadeIn 0.5s ease-in-out";
             paymentCompleteBtn.style.boxShadow = "0 0 20px rgba(30, 136, 229, 0.8)";
+        });
+        
+        payViaUPIBtn.addEventListener("click", function() {
+            if (!isRegistrationEnabled) return;
+            loading.style.display = "block";
+            this.disabled = true;
+            this.textContent = "Opening UPI App...";
+
+            const upiLink = "upi://pay?pa=lenadorin8@oksbi&pn=Gnosis%20Registration&am=20.00&cu=INR&tn=Gnosis4Payment";
+
+            try {
+                window.location.href = upiLink; // Redirect to UPI app
+                setTimeout(() => {
+                    loading.style.display = "none";
+                    this.disabled = false;
+                    this.textContent = "Pay via UPI App";
+                    paymentMessage.style.display = "block"; // Keep message visible
+                }, 3000); // Delay to allow UPI app to open
+            } catch (error) {
+                loading.style.display = "none";
+                this.disabled = false;
+                this.textContent = "Pay via UPI App";
+                errorMessage.textContent = "Failed to open UPI app. Please ensure a UPI app is installed.";
+                errorMessage.style.display = "block";
+                console.error("UPI Error:", error);
+                setTimeout(() => errorMessage.style.display = "none", 3000);
+            }
         });
         
         paymentCompleteBtn.addEventListener("click", function() {
