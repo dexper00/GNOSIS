@@ -643,7 +643,7 @@
         <div class="event-name" id="eventName">Gaming Tournament</div>
         
         <div class="status-message payment-message" id="paymentMessage">
-            Payment QR downloaded! Either scan it with your UPI app or click "Pay via UPI App" to pay ₹20, then return to upload the screenshot.
+            Payment QR downloaded! Open your UPI app by clicking "Pay via UPI App" to scan the QR code (Gnosis4PaymentQR.png), pay ₹20, and take a screenshot.
         </div>
         
         <div class="status-message share-message" id="shareMessage">
@@ -675,12 +675,7 @@
             <div class="instructions-content">
                 <p><strong>Registration Fee:</strong> ₹20</p>
                 <p>Complete the payment to participate in GNOSIS 4.0.</p>
-                <p><strong>Payment Steps:</strong> Click "Pay to Register - ₹20" to download a QR code image. Then, either: 
-                    <ul>
-                        <li><strong>Option 1:</strong> Open your UPI app (e.g., Google Pay, PhonePe), select the QR code scan option, choose the downloaded image, pay ₹20, and take a screenshot of the payment confirmation.</li>
-                        <li><strong>Option 2:</strong> Click "Pay via UPI App" to select your UPI app directly, pay ₹20, and take a screenshot of the payment confirmation.</li>
-                    </ul>
-                </p>
+                <p><strong>Payment Steps:</strong> Click "Pay to Register - ₹20" to download a QR code image (Gnosis4PaymentQR.png). Then, click "Pay via UPI App" to open your UPI app (e.g., Google Pay, PhonePe), select the QR code scan option, choose the downloaded image from your device, pay ₹20, and take a screenshot of the payment confirmation.</p>
                 <p><strong>Verification:</strong> Return to this site, click "Share Screenshot on WhatsApp" to upload your screenshot to the designated contact. Once verified, proceed with registration via the Google Form.</p>
                 <p><strong>Refund Policy:</strong> The registration fee is non-refundable.</p>
                 <p><strong>Application Status:</strong> Incomplete applications without payment verification will be rejected.</p>
@@ -904,25 +899,35 @@
             this.disabled = true;
             this.textContent = "Opening UPI App...";
 
-            const upiLink = "upi://pay?pa=lenadorin8@oksbi&pn=Gnosis%20Registration&am=20.00&cu=INR&tn=Gnosis4Payment";
+            // Attempt to open a common UPI app (e.g., Google Pay or PhonePe)
+            const upiApps = [
+                "gpay://", // Google Pay
+                "phonepe://", // PhonePe
+                "upi://" // Generic UPI intent (may open default UPI app)
+            ];
 
-            try {
-                window.location.href = upiLink; // Redirect to UPI app
-                setTimeout(() => {
-                    loading.style.display = "none";
-                    this.disabled = false;
-                    this.textContent = "Pay via UPI App";
-                    paymentMessage.style.display = "block"; // Keep message visible
-                }, 3000); // Delay to allow UPI app to open
-            } catch (error) {
+            let opened = false;
+            for (let app of upiApps) {
+                try {
+                    window.location.href = app; // Attempt to open the app
+                    opened = true;
+                    break;
+                } catch (e) {
+                    continue; // Try next app if this fails
+                }
+            }
+
+            setTimeout(() => {
                 loading.style.display = "none";
                 this.disabled = false;
                 this.textContent = "Pay via UPI App";
-                errorMessage.textContent = "Failed to open UPI app. Please ensure a UPI app is installed.";
-                errorMessage.style.display = "block";
-                console.error("UPI Error:", error);
-                setTimeout(() => errorMessage.style.display = "none", 3000);
-            }
+                if (!opened) {
+                    errorMessage.textContent = "Failed to open UPI app. Please open your UPI app manually and scan the QR code.";
+                    errorMessage.style.display = "block";
+                    setTimeout(() => errorMessage.style.display = "none", 3000);
+                }
+                paymentMessage.style.display = "block"; // Keep message visible
+            }, 2000); // Delay to allow app to open
         });
         
         paymentCompleteBtn.addEventListener("click", function() {
