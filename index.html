@@ -22,6 +22,74 @@
             padding-bottom: 100px;
         }
         
+        .header {
+            position: relative;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 40, 0.8));
+            backdrop-filter: blur(12px);
+            padding: 25px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+            animation: slideIn 0.8s ease-out;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 50%;
+            padding: 5px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), 0 0 25px rgba(255, 0, 255, 0.3);
+        }
+        
+        .college-info {
+            color: #fff;
+        }
+        
+        .college-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00FFFF, #FF00FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        
+        .department-name {
+            font-size: 1.2rem;
+            font-weight: 500;
+            background: linear-gradient(90deg, #00FFAA, #FFAA00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-top: 6px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 8px rgba(0, 255, 170, 0.4);
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         .video-container {
             position: fixed;
             top: 0;
@@ -224,9 +292,35 @@
             border-left: 4px solid #2196F3;
         }
         
+        .registration-message {
+            border-left: 4px solid #FF9800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tick-mark {
+            font-size: 24px;
+            color: #4CAF50;
+            opacity: 0;
+            animation: drawTick 0.8s ease-out forwards;
+            animation-delay: 0.2s;
+        }
+        
+        .registration-closed-message {
+            border-left: 4px solid #F44336;
+            text-align: center;
+        }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes drawTick {
+            0% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
         .footer {
@@ -365,7 +459,7 @@
             background: rgba(0, 0, 0, 0.6);
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            display: none; /* Hidden by default */
+            display: none;
         }
 
         .admin-title {
@@ -513,6 +607,28 @@
         }
 
         @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .college-name {
+                font-size: 1.4rem;
+            }
+            
+            .department-name {
+                font-size: 1rem;
+            }
+            
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+            
             .title {
                 font-size: 3rem;
             }
@@ -574,6 +690,19 @@
         }
         
         @media (max-width: 480px) {
+            .college-name {
+                font-size: 1.2rem;
+            }
+            
+            .department-name {
+                font-size: 0.9rem;
+            }
+            
+            .logo {
+                width: 50px;
+                height: 50px;
+            }
+            
             .title {
                 font-size: 2.5rem;
             }
@@ -585,6 +714,18 @@
     </style>
 </head>
 <body>
+    <!-- Updated Header Section -->
+    <div class="header">
+        <div class="header-content">
+            <img src="images\collegelogo.png" alt="College Logo" class="logo">
+            <div class="college-info">
+                <div class="college-name">Kerala Government Polytechnic College, Kozhikode</div>
+                <div class="department-name">Department of Computer Engineering</div>
+            </div>
+            <img src="images\cesalogo.png" alt="CESA Logo" class="logo">
+        </div>
+    </div>
+    
     <div class="video-container">
         <video autoplay loop muted playsinline>
             <source src="background.mp4" type="video/mp4">
@@ -635,6 +776,15 @@
         
         <div class="status-message share-message" id="shareMessage">
             Screenshot shared! You can now proceed to registration.
+        </div>
+        
+        <div class="status-message registration-message" id="registrationMessage" style="display: none;">
+            <span class="tick-mark">✔</span>
+            Registration completed successfully! Thank you for joining GNOSIS 4.0.
+        </div>
+        
+        <div class="status-message registration-closed-message" id="registrationClosedMessage" style="display: none;">
+            Registration is currently closed. Please check back later.
         </div>
         
         <div class="loading" id="loading"></div>
@@ -754,6 +904,8 @@
         const eventNameElement = document.getElementById("eventName");
         const paymentMessage = document.getElementById("paymentMessage");
         const shareMessage = document.getElementById("shareMessage");
+        const registrationMessage = document.getElementById("registrationMessage");
+        const registrationClosedMessage = document.getElementById("registrationClosedMessage");
         const loading = document.getElementById("loading");
         
         const payButton = document.getElementById("payButton");
@@ -770,6 +922,7 @@
         
         let index = 0;
         let autoSlideInterval;
+        let isRegistrationEnabled = true;
         
         function showImage(idx) {
             images.forEach(img => img.classList.remove("active"));
@@ -814,11 +967,31 @@
             }
         }
         
+        function updateRegistrationStatus() {
+            if (isRegistrationEnabled) {
+                initialPaymentButtons.style.display = "flex";
+                registrationClosedMessage.style.display = "none";
+                payButton.disabled = false;
+            } else {
+                initialPaymentButtons.style.display = "none";
+                registrationClosedMessage.style.display = "block";
+                paymentConfirmationButtons.style.display = "none";
+                shareButton.style.display = "none";
+                registerForm.style.display = "none";
+                paymentMessage.style.display = "none";
+                shareMessage.style.display = "none";
+                registrationMessage.style.display = "none";
+            }
+        }
+        
+        updateRegistrationStatus();
+        
         payButton.addEventListener("click", function() {
+            if (!isRegistrationEnabled) return;
             loading.style.display = "block";
             this.disabled = true;
             this.textContent = "Processing...";
-            let upiURL = "upi://pay?pa=lenadorin8@oksbi&pn=RegistrationForEvent&am=20&cu=INR";
+            let upiURL = "upi://pay?pa=nabeelalikkal5-1okhdfcbank&pn=RegistrationForEvent&am=20&cu=INR";
             window.location.href = upiURL;
             setTimeout(() => {
                 loading.style.display = "none";
@@ -829,12 +1002,14 @@
         });
         
         gotPaymentBtn.addEventListener("click", function() {
+            if (!isRegistrationEnabled) return;
             paymentMessage.style.display = "block";
             paymentCompleteBtn.style.animation = "fadeIn 0.5s ease-in-out";
             paymentCompleteBtn.style.boxShadow = "0 0 20px rgba(30, 136, 229, 0.8)";
         });
         
         paymentCompleteBtn.addEventListener("click", function() {
+            if (!isRegistrationEnabled) return;
             paymentMessage.style.display = "none";
             paymentConfirmationButtons.style.display = "none";
             shareButton.style.display = "inline-block";
@@ -842,6 +1017,7 @@
         });
         
         shareButton.addEventListener("click", function() {
+            if (!isRegistrationEnabled) return;
             this.disabled = true;
             this.textContent = "Sharing...";
             let whatsappMessage = "Hey, I have completed my payment for GNOSIS 4.0. Here is my screenshot for verification.";
@@ -857,20 +1033,27 @@
         });
         
         registerForm.addEventListener("click", function() {
+            if (!isRegistrationEnabled) return;
             this.textContent = "Redirecting...";
             this.disabled = true;
+            
+            window.open("https://docs.google.com/forms/d/e/1FAIpQLSeTyEsj4-tN4xsrVnpy5kJi3z2AolwD-V4UWGoBOkSMN2BmGQ/viewform?usp=header", "_blank");
+            
             setTimeout(() => {
-                window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSeTyEsj4-tN4xsrVnpy5kJi3z2AolwD-V4UWGoBOkSMN2BmGQ/viewform?usp=header";
-            }, 1000);
+                registerForm.style.display = "none";
+                shareMessage.style.display = "none";
+                registrationMessage.style.display = "flex";
+                registrationMessage.style.animation = "fadeIn 0.5s ease-in-out";
+                step3.classList.add("completed");
+            }, 2000);
         });
 
-        // Official Login Button Logic
         const officialLoginBtn = document.getElementById("officialLoginBtn");
         const adminLoginContainer = document.getElementById("adminLoginContainer");
 
         officialLoginBtn.addEventListener("click", function() {
             adminLoginContainer.style.display = "block";
-            officialLoginBtn.style.display = "none"; // Optionally hide the button after clicking
+            officialLoginBtn.style.display = "none";
         });
 
         const adminLoginBtn = document.getElementById("adminLoginBtn");
@@ -899,7 +1082,6 @@
 
         const validAdminUsername = "nabeel";
         const validAdminPassword = "223800";
-        let isRegistrationEnabled = true;
 
         adminLoginBtn.addEventListener("click", function() {
             const username = adminUsername.value.trim();
@@ -910,7 +1092,7 @@
                 adminLoginMessage.style.display = "none";
                 adminUsername.value = "";
                 adminPassword.value = "";
-                adminLoginContainer.style.display = "none"; // Hide login form after successful login
+                adminLoginContainer.style.display = "none";
             } else {
                 adminLoginMessage.style.display = "block";
                 setTimeout(() => {
@@ -923,7 +1105,7 @@
             adminPage.style.display = "none";
             content.style.display = "block";
             hideAllSubPages();
-            officialLoginBtn.style.display = "block"; // Show the Official Login button again
+            officialLoginBtn.style.display = "block";
         });
 
         function hideAllSubPages() {
@@ -960,6 +1142,7 @@
             adminStatus.textContent = `Registration ${isRegistrationEnabled ? "enabled" : "disabled"} successfully!`;
             adminStatus.style.display = "block";
             setTimeout(() => adminStatus.style.display = "none", 2000);
+            updateRegistrationStatus();
         });
 
         toggleBackBtn.addEventListener("click", function() {
