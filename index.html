@@ -523,7 +523,7 @@
         .upi-select {
             padding: 10px;
             font-size: 16px;
-            border-radius_topics: 50px;
+            border-radius: 50px;
             background: rgba(255, 255, 255, 0.1);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -712,7 +712,7 @@
                 height: 200px;
             }
             
-/*            .button-container {
+            .button-container {
                 flex-direction: column;
                 width: 100%;
                 max-width: 300px;
@@ -837,7 +837,7 @@
         </div>
         
         <div class="status-message share-message" id="shareMessage">
-            Screenshot shared! Please ensure it was sent to both numbers: +918157812238 and +919876543210. You can now proceed to registration.
+            Screenshot shared! Please ensure it was sent to both numbers: +918157812238 and +917736770815. You can now proceed to registration.
         </div>
 
         <div class="status-message registration-complete-message" id="registrationMessage" style="display: none;">
@@ -876,8 +876,8 @@
             <div class="instructions-content">
                 <p><strong>Registration Fee:</strong> ₹20</p>
                 <p>Complete the payment to participate in GNOSIS 4.0.</p>
-                <p><strong>Payment Steps:</strong> Click above and download the QR code image (Gnosis4PaymentQR.png). Then, click "Pay via UPI App", select your UPI app (e.g., Google Pay, PhonePe, Paytm) from the dropdown, open it, scan the QR code from your device, pay ₹20, and take a screenshot of the payment confirmation.</p>
-                <p><strong>Verification:</strong> Return to this site, click "Share Screenshot on WhatsApp" to upload your screenshot to the designated contacts (+918157812238 and +919876543210). Once verified, proceed with registration via the Google Form.</p>
+                <p><strong>Payment Steps:</strong> Click above and download a QR code image (Gnosis4PaymentQR.png). Then, click "Pay via UPI App", select your UPI app (e.g., Google Pay, PhonePe, Paytm) from the dropdown, open it, scan the QR code from your device, pay ₹20, and take a screenshot of the payment confirmation.</p>
+                <p><strong>Verification:</strong> Return to this site, click "Share Screenshot on WhatsApp" to upload your screenshot to both designated contacts (+918157812238 and +917736770815) simultaneously. Once verified, proceed with registration via the Google Form.</p>
                 <p><strong>Refund Policy:</strong> The registration fee is non-refundable.</p>
                 <p><strong>Application Status:</strong> Incomplete applications without payment verification will be rejected.</p>
             </div>
@@ -1151,20 +1151,18 @@
             this.textContent = "Sharing...";
             const whatsappMessage = "Hey, I have completed my payment for GNOSIS 4.0. Here is my screenshot for verification.";
             const number1 = "+918157812238";
-            const number2 = "+917736770815"; // Replace with your second number
+            const number2 = "+917736770815"; // Second number updated
             const whatsappURL1 = `https://api.whatsapp.com/send?phone=${number1}&text=${encodeURIComponent(whatsappMessage)}`;
             const whatsappURL2 = `https://api.whatsapp.com/send?phone=${number2}&text=${encodeURIComponent(whatsappMessage)}`;
             
             try {
-                // Open WhatsApp for the first number
+                // Open both WhatsApp links as close to simultaneously as possible
                 const window1 = window.open(whatsappURL1, "_blank");
-                // Open WhatsApp for the second number after a short delay
-                setTimeout(() => {
-                    const window2 = window.open(whatsappURL2, "_blank");
-                    if (!window1 || !window2) {
-                        throw new Error("Popup blocked or WhatsApp not available");
-                    }
-                }, 1000);
+                const window2 = window.open(whatsappURL2, "_blank");
+
+                if (!window1 || !window2) {
+                    throw new Error("Popup blocked or WhatsApp not available");
+                }
 
                 setTimeout(() => {
                     this.disabled = false;
@@ -1174,7 +1172,7 @@
                     registerForm.style.display = "inline-block";
                     registerForm.style.animation = "fadeIn 0.5s ease-in-out";
                     updateStep(3);
-                }, 4000); // Increased delay to allow time for both sends
+                }, 3000); // Delay to allow user to attach and send screenshot
             } catch (error) {
                 this.disabled = false;
                 this.textContent = "Share Screenshot on WhatsApp";
