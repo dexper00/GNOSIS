@@ -287,14 +287,6 @@
             box-shadow: 0 5px 15px rgba(236, 110, 173, 0.3);
         }
         
-        .got-payment-btn {
-            background: linear-gradient(45deg, #43A047, #2E7D32);
-        }
-        
-        .got-payment-btn:hover {
-            background: linear-gradient(45deg, #2E7D32, #43A047);
-        }
-        
         .payment-complete-btn {
             background: linear-gradient(45deg, #1E88E5, #0D47A1);
         }
@@ -863,7 +855,6 @@
         </div>
         
         <div class="button-container" id="paymentConfirmationButtons" style="display: none;">
-          
             <button id="payViaUPIBtn" class="upi-app-btn">Pay via UPI App</button>
             <button id="paymentCompleteBtn" class="payment-complete-btn" style="display: none;">Payment Complete</button>
         </div>
@@ -878,7 +869,6 @@
         </div>
         
         <button id="shareButton" style="display: none;">Share Screenshot on WhatsApp</button>
-      <button id="gotPaymentBtn" class="got-payment-btn">Got Payment</button>
         <button id="registerForm" style="display: none;">Proceed to Registration Form</button>
 
         <div class="instructions-container">
@@ -989,7 +979,6 @@
         const payButton = document.getElementById("payButton");
         const initialPaymentButtons = document.getElementById("initialPaymentButtons");
         const paymentConfirmationButtons = document.getElementById("paymentConfirmationButtons");
-        const gotPaymentBtn = document.getElementById("gotPaymentBtn");
         const payViaUPIBtn = document.getElementById("payViaUPIBtn");
         const paymentCompleteBtn = document.getElementById("paymentCompleteBtn");
         const upiSelectContainer = document.getElementById("upiSelectContainer");
@@ -1099,11 +1088,6 @@
                 console.error("QR Download Error:", error);
                 setTimeout(() => errorMessage.style.display = "none", 3000);
             }
-        });
-        
-        gotPaymentBtn.addEventListener("click", function() {
-            if (!isRegistrationEnabled) return;
-            paymentMessage.style.display = "block";
         });
         
         payViaUPIBtn.addEventListener("click", function() {
