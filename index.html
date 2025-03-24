@@ -1150,15 +1150,25 @@
             this.disabled = true;
             this.textContent = "Sharing...";
             let whatsappMessage = "Hey, I have completed my payment for GNOSIS 4.0. Here is my screenshot for verification.";
-            let whatsappURL = `https://api.whatsapp.com/send?phone=+918157812238&text=${encodeURIComponent(whatsappMessage)}`;
+            // Send to two numbers
+            let whatsappURL1 = `https://api.whatsapp.com/send?phone=+918157812238&text=${encodeURIComponent(whatsappMessage)}`;
+            let whatsappURL2 = `https://api.whatsapp.com/send?phone=+919876543210&text=${encodeURIComponent(whatsappMessage)}`; // Replace with the second number
+            
             try {
-                window.open(whatsappURL, "_blank");
+                // Open WhatsApp for both numbers in sequence
+                window.open(whatsappURL1, "_blank");
+                setTimeout(() => {
+                    window.open(whatsappURL2, "_blank");
+                }, 1000); // Delay second link slightly to ensure smooth opening
+                
                 setTimeout(() => {
                     shareButton.style.display = "none";
                     shareMessage.style.display = "block";
                     registerForm.style.display = "inline-block";
                     registerForm.style.animation = "fadeIn 0.5s ease-in-out";
                     updateStep(3);
+                    this.disabled = false;
+                    this.textContent = "Share Screenshot on WhatsApp";
                 }, 3000);
             } catch (error) {
                 this.disabled = false;
