@@ -311,6 +311,14 @@
             background: linear-gradient(45deg, #9C27B0, #E91E63);
         }
         
+        .offline-payment-btn {
+            background: linear-gradient(45deg, #FF9800, #F57C00);
+        }
+
+        .offline-payment-btn:hover {
+            background: linear-gradient(45deg, #F57C00, #FF9800);
+        }
+        
         .status-message {
             background: rgba(0, 0, 0, 0.6);
             padding: 15px 25px;
@@ -851,7 +859,8 @@
         <div class="loading" id="loading"></div>
         
         <div class="button-container" id="initialPaymentButtons">
-            <button id="payButton">Click Here To Download The Qr-Code To Pay ₹20 For Registeration</button>
+            <button id="payButton">Click Here To Download The Qr-Code To Pay ₹20 For Registration</button>
+            <button id="offlinePaymentBtn" class="offline-payment-btn">Offline Payment Registration</button>
         </div>
         
         <div class="button-container" id="paymentConfirmationButtons" style="display: none;">
@@ -877,6 +886,7 @@
                 <p><strong>Registration Fee:</strong> ₹20</p>
                 <p>Complete the payment to participate in GNOSIS 4.0.</p>
                 <p><strong>Payment Steps:</strong> Click above and download a QR code image (Gnosis4PaymentQR.png). Then, click "Pay via UPI App", select your UPI app (e.g., Google Pay, PhonePe, Paytm) from the dropdown, open it, scan the QR code from your device, pay ₹20, and take a screenshot of the payment confirmation.</p>
+                <p><strong>Offline Payment Steps:</strong> Select "Offline Payment Registration" to register and then pay ₹20 in cash before entry to the event to the CESA Coordinator or any member of the CESA Committee.</p>
                 <p><strong>Verification:</strong> Return to this site, click "Share Screenshot on WhatsApp" to upload your screenshot to both designated contacts (+918157812238 and +917736770815) simultaneously. Once verified, proceed with registration via the Google Form.</p>
                 <p><strong>Refund Policy:</strong> The registration fee is non-refundable.</p>
                 <p><strong>Application Status:</strong> Incomplete applications without payment verification will be rejected.</p>
@@ -1324,6 +1334,26 @@
             }
             startAutoSlide();
         }
+
+        const offlinePaymentBtn = document.getElementById("offlinePaymentBtn");
+
+        offlinePaymentBtn.addEventListener("click", function() {
+            this.textContent = "Redirecting...";
+            this.disabled = true;
+            try {
+                window.open("https://docs.google.com/forms/d/e/1FAIpQLSeTyEsj4-tN4xsrVnpy5kJi3z2AolwD-V4UWGoBOkSMN2BmGQ/viewform?usp=header", "_blank");
+                setTimeout(() => {
+                    this.textContent = "Offline Payment Registration";
+                    this.disabled = false;
+                }, 2000);
+            } catch (error) {
+                this.textContent = "Offline Payment Registration";
+                this.disabled = false;
+                errorMessage.textContent = "Failed to open registration form. Please try again.";
+                errorMessage.style.display = "block";
+                setTimeout(() => errorMessage.style.display = "none", 3000);
+            }
+        });
 
         updateRegistrationStatus();
     </script>
