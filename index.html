@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* [CSS remains unchanged from previous version] */
         * {
             margin: 0;
             padding: 0;
@@ -845,7 +846,7 @@
         </div>
         
         <div class="status-message share-message" id="shareMessage">
-            Screenshot shared! Please ensure it was sent to both numbers: +918157812238 and +917736770815. You can now proceed to registration.
+            Screenshot shared! Please ensure it was sent to +918157812238. You can now proceed to registration.
         </div>
 
         <div class="status-message registration-complete-message" id="registrationMessage" style="display: none;">
@@ -885,11 +886,11 @@
             <div class="instructions-content">
                 <p><strong>Registration Fee:</strong> ₹20</p>
                 <p>Complete the payment to participate in GNOSIS 4.0.</p>
-                <p><strong>Payment Steps:</strong> Click above and download a QR code image (Gnosis4PaymentQR.png). Then, click "Pay via UPI App", select your UPI app (e.g., Google Pay, PhonePe, Paytm) from the dropdown, open it, scan the QR code from your device, pay ₹20, and take a screenshot of the payment confirmation.</p>
+                <p><strong>Online Payment Steps:</strong> Click "Click Here To Download The Qr-Code To Pay ₹20 For Registration" and download a QR code image (Gnosis4PaymentQR.png). Then, click "Pay via UPI App", select your UPI app (e.g., Google Pay, PhonePe, Paytm) from the dropdown, open it, scan the QR code from your device, pay ₹20, and take a screenshot of the payment confirmation.</p>
                 <p><strong>Offline Payment Steps:</strong> Select "Offline Payment Registration" to register and then pay ₹20 in cash before entry to the event to the CESA Coordinator or any member of the CESA Committee.</p>
-                <p><strong>Verification:</strong> Return to this site, click "Share Screenshot on WhatsApp" to upload your screenshot to both designated contacts (+918157812238 and +917736770815) simultaneously. Once verified, proceed with registration via the Google Form.</p>
+                <p><strong>Online Verification:</strong> For online payments, return to this site, click "Share Screenshot on WhatsApp" to upload your screenshot to the designated contact (+918157812238). Once verified, proceed with registration via the Google Form.</p>
                 <p><strong>Refund Policy:</strong> The registration fee is non-refundable.</p>
-                <p><strong>Application Status:</strong> Incomplete applications without payment verification will be rejected.</p>
+                <p><strong>Application Status:</strong> Incomplete applications without payment verification (for online) or cash payment (for offline) will be rejected.</p>
             </div>
         </div>
 
@@ -1160,17 +1161,12 @@
             this.disabled = true;
             this.textContent = "Sharing...";
             const whatsappMessage = "Hey, I have completed my payment for GNOSIS 4.0. Here is my screenshot for verification.";
-            const number1 = "+918157812238";
-            const number2 = "+917736770815"; // Second number updated
-            const whatsappURL1 = `https://api.whatsapp.com/send?phone=${number1}&text=${encodeURIComponent(whatsappMessage)}`;
-            const whatsappURL2 = `https://api.whatsapp.com/send?phone=${number2}&text=${encodeURIComponent(whatsappMessage)}`;
+            const number = "+918157812238"; // Only one number now
+            const whatsappURL = `https://api.whatsapp.com/send?phone=${number}&text=${encodeURIComponent(whatsappMessage)}`;
             
             try {
-                // Open both WhatsApp links as close to simultaneously as possible
-                const window1 = window.open(whatsappURL1, "_blank");
-                const window2 = window.open(whatsappURL2, "_blank");
-
-                if (!window1 || !window2) {
+                const whatsappWindow = window.open(whatsappURL, "_blank");
+                if (!whatsappWindow) {
                     throw new Error("Popup blocked or WhatsApp not available");
                 }
 
@@ -1186,7 +1182,7 @@
             } catch (error) {
                 this.disabled = false;
                 this.textContent = "Share Screenshot on WhatsApp";
-                errorMessage.textContent = "Failed to open WhatsApp for both numbers. Please send the screenshot manually to +918157812238 and +917736770815.";
+                errorMessage.textContent = "Failed to open WhatsApp. Please send the screenshot manually to +918157812238.";
                 errorMessage.style.display = "block";
                 console.error("WhatsApp Error:", error);
                 setTimeout(() => errorMessage.style.display = "none", 5000);
@@ -1358,4 +1354,4 @@
         updateRegistrationStatus();
     </script>
 </body>
-</html>
+</html>s
